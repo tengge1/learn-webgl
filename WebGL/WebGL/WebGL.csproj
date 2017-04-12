@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="tutorial\example08\Firefox.ogv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -77,6 +78,11 @@
   <ItemGroup>
     <Content Include="tutorial\example01\index.html" />
     <Content Include="tutorial\example01\index.js" />
+    <Content Include="tutorial\example08\glUtils.js" />
+    <Content Include="tutorial\example08\index.html" />
+    <Content Include="tutorial\example08\index.js" />
+    <Content Include="tutorial\example08\sylvester.js" />
+    <Content Include="tutorial\example08\sylvester.src.js" />
     <Content Include="tutorial\example07\cubetexture.png" />
     <Content Include="tutorial\example07\glUtils.js" />
     <Content Include="tutorial\example07\index.html" />
