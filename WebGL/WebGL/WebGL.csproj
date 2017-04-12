@@ -77,6 +77,11 @@
   <ItemGroup>
     <Content Include="tutorial\example01\index.html" />
     <Content Include="tutorial\example01\index.js" />
+    <Content Include="tutorial\example05\glUtils.js" />
+    <Content Include="tutorial\example05\index.html" />
+    <Content Include="tutorial\example05\index.js" />
+    <Content Include="tutorial\example05\sylvester.js" />
+    <Content Include="tutorial\example05\sylvester.src.js" />
     <Content Include="tutorial\example04\glUtils.js" />
     <Content Include="tutorial\example04\index.html" />
     <Content Include="tutorial\example04\index.js" />
