@@ -66,6 +66,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="hiwebgl教程\01_三角和方框的故事\index.html" />
+    <Content Include="hiwebgl教程\01_三角和方框的故事\Oak3D_v_0_5.js" />
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
