@@ -83,6 +83,12 @@
     <Content Include="hiwebgl教程\07_平行光和环境光\crate.gif" />
     <Content Include="hiwebgl教程\07_平行光和环境光\index.html" />
     <Content Include="hiwebgl教程\07_平行光和环境光\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\08_深度缓存、透明度和混合\glass.gif" />
+    <Content Include="hiwebgl教程\08_深度缓存、透明度和混合\index.html" />
+    <Content Include="hiwebgl教程\08_深度缓存、透明度和混合\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\09、优化代码结构实现多物体运动\index.html" />
+    <Content Include="hiwebgl教程\09、优化代码结构实现多物体运动\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\09、优化代码结构实现多物体运动\star.gif" />
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
