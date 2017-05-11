@@ -93,6 +93,9 @@
     <Content Include="hiwebgl教程\10、载入世界以及相机简介\mud.gif" />
     <Content Include="hiwebgl教程\10、载入世界以及相机简介\Oak3D_v_0_5.js" />
     <Content Include="hiwebgl教程\10、载入世界以及相机简介\world.txt" />
+    <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\index.html" />
+    <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\moon.gif" />
+    <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\Oak3D_v_0_5.js" />
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
