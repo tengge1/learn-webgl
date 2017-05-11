@@ -96,10 +96,32 @@
     <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\index.html" />
     <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\moon.gif" />
     <Content Include="hiwebgl教程\11、球体、旋转矩阵和鼠标事件\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\12_点光源\crate.gif" />
+    <Content Include="hiwebgl教程\12_点光源\index.html" />
+    <Content Include="hiwebgl教程\12_点光源\moon.gif" />
+    <Content Include="hiwebgl教程\12_点光源\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\13_片源级光照和多program对象\crate.gif" />
+    <Content Include="hiwebgl教程\13_片源级光照和多program对象\index.html" />
+    <Content Include="hiwebgl教程\13_片源级光照和多program对象\moon.gif" />
+    <Content Include="hiwebgl教程\13_片源级光照和多program对象\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\arroway_de_metal_structure_06_d100_flat.jpg" />
+    <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\earth.jpg" />
+    <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\index.html" />
+    <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\15_高光贴图\earth-specular.gif" />
+    <Content Include="hiwebgl教程\15_高光贴图\earth.jpg" />
+    <Content Include="hiwebgl教程\15_高光贴图\index.html" />
+    <Content Include="hiwebgl教程\15_高光贴图\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\16_渲染到纹理\crate.gif" />
+    <Content Include="hiwebgl教程\16_渲染到纹理\index.html" />
+    <Content Include="hiwebgl教程\16_渲染到纹理\moon.gif" />
+    <Content Include="hiwebgl教程\16_渲染到纹理\Oak3D_v_0_5.js" />
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
     <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
+    <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\Teapot.json" />
+    <Content Include="hiwebgl教程\16_渲染到纹理\macbook.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -151,6 +173,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
