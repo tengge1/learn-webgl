@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>example06</title>
+    <title>05_创建3D物体</title>
     <script src="sylvester.js"></script>
     <script src="glUtils.js"></script>
     <script src="index.js"></script>
@@ -12,10 +12,9 @@
     <!-- Fragment shader program -->
 
     <script id="shader-fs" type="x-shader/x-fragment">
-        varying highp vec2 vTextureCoord;
-        uniform sampler2D uSampler;
+        varying lowp vec4 vColor;
         void main(void) {
-        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        gl_FragColor = vColor;
         }
     </script>
 
@@ -23,13 +22,13 @@
 
     <script id="shader-vs" type="x-shader/x-vertex">
         attribute vec3 aVertexPosition;
-        attribute vec2 aTextureCoord;
+        attribute vec4 aVertexColor;
         uniform mat4 uMVMatrix;
         uniform mat4 uPMatrix;
-        varying highp vec2 vTextureCoord;
+        varying lowp vec4 vColor;
         void main(void) {
         gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-        vTextureCoord = aTextureCoord;
+        vColor = aVertexColor;
         }
     </script>
 </body>
