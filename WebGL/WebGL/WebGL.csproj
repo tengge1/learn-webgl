@@ -77,6 +77,12 @@
     <Content Include="hiwebgl教程\05_引入纹理\index.html" />
     <Content Include="hiwebgl教程\05_引入纹理\nehe.gif" />
     <Content Include="hiwebgl教程\05_引入纹理\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\06_键盘输入和纹理过滤\crate.gif" />
+    <Content Include="hiwebgl教程\06_键盘输入和纹理过滤\index.html" />
+    <Content Include="hiwebgl教程\06_键盘输入和纹理过滤\Oak3D_v_0_5.js" />
+    <Content Include="hiwebgl教程\07_平行光和环境光\crate.gif" />
+    <Content Include="hiwebgl教程\07_平行光和环境光\index.html" />
+    <Content Include="hiwebgl教程\07_平行光和环境光\Oak3D_v_0_5.js" />
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
