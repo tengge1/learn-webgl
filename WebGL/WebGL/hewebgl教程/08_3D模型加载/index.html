@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>08_3D模型加载</title>
+    <script src="../js/three.js"></script>
+    <script src="../js/loaders/OBJLoader.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000); // 透视投影相机
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var light = new THREE.DirectionalLight(0xffffff); // 平行光
+        light.position.set(10, 10, 10).normalize();
+        scene.add(light);
+
+        // 贴图
+        var texture = new THREE.Texture();
+        var loader = new THREE.ImageLoader();
+        loader.load('../model/male/UV_Grid_Sm.jpg', function (image) {
+            texture.image = image;
+            texture.needsUpdate = true;
+        });
+
+        // 模型
+        var loader = new THREE.OBJLoader();
+        var obj = null;
+        loader.load('../model/male/male02.obj', function (obj1) {
+            obj = obj1;
+            obj.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material.map = texture;
+                }
+            });
+            scene.add(obj);
+            obj.position.y = -80;
+        });
+
+        camera.position.set(0, 0, 200);
+        camera.lookAt(0, 0, 0);
+
+        var render = function () {
+            if (obj) {
+                obj.rotation.y += 0.01;
+            }
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>
