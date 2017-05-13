@@ -69,6 +69,12 @@
     <Content Include="hewebgl教程\01_开启ThreeJs之旅\index.html" />
     <Content Include="hewebgl教程\02_还记得点线面吗\index.html" />
     <Content Include="hewebgl教程\03_让场景动起来\index.html" />
+    <Content Include="hewebgl教程\04_三维空间的观察\index.html" />
+    <Content Include="hewebgl教程\05_五彩的光源\index.html" />
+    <Content Include="hewebgl教程\06_纹理\index.html" />
+    <Content Include="hewebgl教程\07_动画纹理\index.html" />
+    <Content Include="hewebgl教程\image\texture-atlas.jpg" />
+    <Content Include="hewebgl教程\image\wanzi.jpg" />
     <Content Include="hewebgl教程\js\stats.js" />
     <Content Include="hewebgl教程\js\stats.min.js" />
     <Content Include="hewebgl教程\js\three.js" />
@@ -131,6 +137,7 @@
     <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
     <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\Teapot.json" />
     <Content Include="hiwebgl教程\16_渲染到纹理\macbook.json" />
+    <Content Include="hewebgl教程\video\sintel.webm" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

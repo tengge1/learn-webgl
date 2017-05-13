@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>06_纹理</title>
+    <script src="../js/three.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000); // 透视投影相机
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var light = new THREE.DirectionalLight(0xffffff); // 平行光
+        light.position.set(10, 10, 10).normalize();
+        scene.add(light);
+
+        // uv映射
+        var brick = [new THREE.Vector2(0, 0.666), new THREE.Vector2(0.5, 0.666), new THREE.Vector2(0.5, 1), new THREE.Vector2(0, 1)];
+        var air = [new THREE.Vector2(0.5, 0.666), new THREE.Vector2(1, 0.666), new THREE.Vector2(1, 1), new THREE.Vector2(0.5, 1)];
+        var crate = [new THREE.Vector2(0, 0.333), new THREE.Vector2(0.5, 0.333), new THREE.Vector2(0.5, 0.666), new THREE.Vector2(0, 0.666)];
+        var stone = [new THREE.Vector2(0.5, 0.333), new THREE.Vector2(1, 0.333), new THREE.Vector2(1, 0.666), new THREE.Vector2(0.5, 0.666)];
+        var sea = [new THREE.Vector2(0, 0), new THREE.Vector2(0.5, 0), new THREE.Vector2(0.5, 0.333), new THREE.Vector2(0, 0.333)];
+        var wood = [new THREE.Vector2(0.5, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 0.333), new THREE.Vector2(0.5, 0.333)];
+
+        var geometry = new THREE.BoxGeometry(30, 30, 30);
+        geometry.faceVertexUvs[0] = [];
+        geometry.faceVertexUvs[0][0] = [brick[0], brick[1], brick[3]];
+        geometry.faceVertexUvs[0][1] = [brick[1], brick[2], brick[3]];
+        geometry.faceVertexUvs[0][2] = [air[0], air[1], air[3]];
+        geometry.faceVertexUvs[0][3] = [air[1], air[2], air[3]];
+        geometry.faceVertexUvs[0][4] = [crate[0], crate[1], crate[3]];
+        geometry.faceVertexUvs[0][5] = [crate[1], crate[2], crate[3]];
+        geometry.faceVertexUvs[0][6] = [stone[0], stone[1], stone[3]];
+        geometry.faceVertexUvs[0][7] = [stone[1], stone[2], stone[3]];
+        geometry.faceVertexUvs[0][8] = [sea[0], sea[1], sea[3]];
+        geometry.faceVertexUvs[0][9] = [sea[1], sea[2], sea[3]];
+        geometry.faceVertexUvs[0][10] = [brick[0], brick[1], brick[3]];
+        geometry.faceVertexUvs[0][11] = [wood[1], wood[2], wood[3]];
+
+        var texture = new THREE.ImageUtils.loadTexture('../image/texture-atlas.jpg', null);
+        var material = new THREE.MeshBasicMaterial({ map: texture });
+        var box = new THREE.Mesh(geometry, material);
+        scene.add(box);
+
+        camera.position.set(0, 0, 100);
+        camera.lookAt(0, 0, 0);
+
+        window.onresize = function () {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        var render = function () {
+            box.rotation.x += 0.01;
+            box.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>
