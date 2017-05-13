@@ -242,6 +242,20 @@
     <Content Include="mozilla教程\02_绘制2D物体\index.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.src.js" />
+    <Content Include="threejs教程\01.创建场景.html" />
+    <Content Include="threejs教程\02.画线.html" />
+    <Content Include="threejs教程\03.立方体贴图.html" />
+    <Content Include="threejs教程\04.顶点立方体.html" />
+    <Content Include="threejs教程\css\common.css" />
+    <Content Include="threejs教程\image\bricks.jpg" />
+    <Content Include="threejs教程\image\clouds.jpg" />
+    <Content Include="threejs教程\image\crate.jpg" />
+    <Content Include="threejs教程\image\stone-wall.jpg" />
+    <Content Include="threejs教程\image\water.jpg" />
+    <Content Include="threejs教程\image\wood-floor.jpg" />
+    <Content Include="threejs教程\js\three.js" />
+    <Content Include="threejs教程\js\three.min.js" />
+    <Content Include="threejs教程\js\three.module.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
