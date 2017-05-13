@@ -250,3 +250,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# 模型
+!WebGL/WebGL/hewebgl教程/model/**/*.obj
