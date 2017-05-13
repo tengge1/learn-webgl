@@ -66,6 +66,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="hewebgl教程\01_开启ThreeJs之旅\index.html" />
+    <Content Include="hewebgl教程\02_还记得点线面吗\index.html" />
+    <Content Include="hewebgl教程\03_让场景动起来\index.html" />
+    <Content Include="hewebgl教程\js\stats.js" />
+    <Content Include="hewebgl教程\js\stats.min.js" />
+    <Content Include="hewebgl教程\js\three.js" />
+    <Content Include="hewebgl教程\js\three.min.js" />
+    <Content Include="hewebgl教程\js\three.module.js" />
+    <Content Include="hewebgl教程\js\Tween.js" />
     <Content Include="hiwebgl教程\01_三角和方框的故事\index.html" />
     <Content Include="hiwebgl教程\01_三角和方框的故事\Oak3D_v_0_5.js" />
     <Content Include="hiwebgl教程\02_添加颜色\index.html" />

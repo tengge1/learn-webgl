@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>03_让场景动起来</title>
+    <script src="../js/three.js"></script>
+    <script src="../js/stats.js"></script>
+    <script src="../js/Tween.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        var geometry = new THREE.CylinderGeometry(5, 10, 10);
+        var material = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+        var cylinder = new THREE.Mesh(geometry, material);
+        scene.add(cylinder);
+
+        camera.position.set(0, 0, 100);
+        camera.lookAt(0, 0, 0);
+
+        // 性能监视器
+        var stats = new Stats();
+        stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+        document.body.appendChild(stats.dom);
+
+        // TWEEN初始化
+        new TWEEN.Tween(cylinder.position).to({ x: -100 }, 1000).repeat(Infinity).start();
+
+        var render = function () {
+            stats.begin();
+            TWEEN.update();
+            // cylinder.position.x--;
+            // camera.position.x++;
+            renderer.render(scene, camera);
+            stats.end();
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>
