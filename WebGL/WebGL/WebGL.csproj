@@ -191,11 +191,11 @@
     <Content Include="mozilla教程\08_动画贴图\index.css" />
     <Content Include="packages.config" />
     <Content Include="mozilla教程\07_灯光\glUtils.js" />
-    <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
     <Content Include="hiwebgl教程\14_镜面高光和载入JSON模型\Teapot.json" />
     <Content Include="hiwebgl教程\16_渲染到纹理\macbook.json" />
     <Content Include="hewebgl教程\video\sintel.webm" />
     <Content Include="hewebgl教程\model\male\male02.obj" />
+    <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
