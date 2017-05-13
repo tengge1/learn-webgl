@@ -252,4 +252,4 @@ paket-files/
 *.sln.iml
 
 # 模型
-!WebGL/WebGL/hewebgl教程/model/*/*.obj
+!**/model/**.obj
