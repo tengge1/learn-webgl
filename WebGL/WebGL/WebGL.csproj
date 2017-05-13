@@ -74,6 +74,7 @@
     <Content Include="hewebgl教程\06_纹理\index.html" />
     <Content Include="hewebgl教程\07_动画纹理\index.html" />
     <Content Include="hewebgl教程\08_3D模型加载\index.html" />
+    <Content Include="hewebgl教程\09_网格模型旋转\index.html" />
     <Content Include="hewebgl教程\image\texture-atlas.jpg" />
     <Content Include="hewebgl教程\image\wanzi.jpg" />
     <Content Include="hewebgl教程\js\loaders\3MFLoader.js" />
