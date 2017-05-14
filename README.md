@@ -1,6 +1,6 @@
 # WebGL学习
 
-## MozillaWebGL：https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+* MozillaWebGL：https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
 
 1. WebGL入门
 2. 绘制2D物体
@@ -11,7 +11,7 @@
 7. 灯光
 8. 动画贴图
 
-## HiWebGL：http://www.hiwebgl.com/
+* HiWebGL：http://www.hiwebgl.com/
 
 1. 三角和方框的故事
 2. 添加颜色
@@ -30,7 +30,7 @@
 15. 高光贴图
 16. 渲染到纹理
 
-## HeWebGL:http://www.hewebgl.com/
+* HeWebGL:http://www.hewebgl.com/
 
 1. 开启ThreeJs之旅
 2. 还记得点线面吗
@@ -42,16 +42,16 @@
 8. 3D模型加载
 9. 网格模型旋转
 
-## ThreeJs：https://threejs.org/
+* ThreeJs：https://threejs.org/
 
 1. 创建场景
 2. 画线
 3. 立方体贴图
 4. 顶点立方体
 
-## opengles_shading_language：https://www.khronos.org/files/opengles_shading_language.pdf
+* opengles_shading_language：https://www.khronos.org/files/opengles_shading_language.pdf
 
-## 特别感谢
+* 特别感谢
 
 1. 感谢Oak3D提供图形库支持。
 2. 感谢Jet Propulsion Laboratory提供月球纹理。
