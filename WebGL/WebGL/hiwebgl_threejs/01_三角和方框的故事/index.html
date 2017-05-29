@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>01_三角和方框的故事</title>
+    <link href="../common/common.css" rel="stylesheet" />
+    <script src="../common/three.js"></script>
+</head>
+<body>
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition;
+
+        void main(void) {
+        gl_Position = vec4(aVertexPosition, 1.0);
+        }
+    </script>
+    <script id="shader-fs" type="x-shader/x-fragment">
+        void main(void) {
+        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }
+    </script>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        camera.position.z = 5;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // 三角形
+        var triangleVertex = new Float32Array([
+            0.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0
+        ]);
+        var geometry = new THREE.BufferGeometry();
+        geometry.addAttribute('aVertexPosition', new THREE.BufferAttribute(triangleVertex, 3));
+        geometry.addAttribute('uPMatrix', new THREE.BufferAttribute(camera.projectionMatrix.elements, 3));
+        var material = new THREE.RawShaderMaterial({
+            uniforms: {
+                time: { value: 1.0 }
+            },
+            vertexShader: document.getElementById('shader-vs').innerText,
+            fragmentShader: document.getElementById('shader-fs').innerText
+        });
+        var triangle = new THREE.Mesh(geometry, material);
+        scene.add(triangle);
+
+        function render() {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
+</body>
+</html>
