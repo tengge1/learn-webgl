@@ -8,15 +8,18 @@
 </head>
 <body>
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition;
+        attribute vec3 position;
+
+        uniform mat4 uMVMatrix;
+        uniform mat4 uPMatrix;
 
         void main(void) {
-        gl_Position = vec4(aVertexPosition, 1.0);
+        gl_Position = uPMatrix * vec4(position, 1);
         }
     </script>
     <script id="shader-fs" type="x-shader/x-fragment">
         void main(void) {
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);
         }
     </script>
     <script>
@@ -25,26 +28,39 @@
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-        camera.position.z = 5;
+        camera.position.z = 10;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         // 三角形
         var triangleVertex = new Float32Array([
-            0.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0
+            0.0, 0.5, 0.0,
+            -0.5, -0.5, 0.0,
+            0.5, -0.5, 0.0
         ]);
         var geometry = new THREE.BufferGeometry();
-        geometry.addAttribute('aVertexPosition', new THREE.BufferAttribute(triangleVertex, 3));
-        geometry.addAttribute('uPMatrix', new THREE.BufferAttribute(camera.projectionMatrix.elements, 3));
+        geometry.addAttribute('position', new THREE.BufferAttribute(triangleVertex, 3));
+        //var geometry = new THREE.PlaneGeometry(1,1);
+        var uPMatrix = new THREE.Matrix4();
+        uPMatrix.set(
+            1.0, 0, 0, 0,
+            0, 1.0, 0, 0,
+            0, 0, 1.0, 0,
+            0, 0, 0, 1.0
+            );
+
         var material = new THREE.RawShaderMaterial({
             uniforms: {
-                time: { value: 1.0 }
+                uPMatrix: {
+                    type: 'm4',
+                    value: uPMatrix
+                }
             },
             vertexShader: document.getElementById('shader-vs').innerText,
             fragmentShader: document.getElementById('shader-fs').innerText
         });
+        //material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         var triangle = new THREE.Mesh(geometry, material);
+        triangle.frustumCulled = false;
         scene.add(triangle);
 
         function render() {
