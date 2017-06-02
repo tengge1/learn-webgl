@@ -248,6 +248,16 @@
     <Content Include="mozilla教程\02_绘制2D物体\index.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.src.js" />
+    <Content Include="threejs例子\01_地面\index.html" />
+    <Content Include="threejs例子\布\index.html" />
+    <Content Include="threejs例子\common\css\common.css" />
+    <Content Include="threejs例子\common\js\Cloth.js" />
+    <Content Include="threejs例子\common\js\OrbitControls.js" />
+    <Content Include="threejs例子\common\js\three.js" />
+    <Content Include="threejs例子\common\js\three.min.js" />
+    <Content Include="threejs例子\common\js\three.module.js" />
+    <Content Include="threejs例子\common\texture\circuit_pattern.png" />
+    <Content Include="threejs例子\common\texture\grasslight-big.jpg" />
     <Content Include="threejs教程\01.创建场景.html" />
     <Content Include="threejs教程\02.画线.html" />
     <Content Include="threejs教程\03.立方体贴图.html" />
