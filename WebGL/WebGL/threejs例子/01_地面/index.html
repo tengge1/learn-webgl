@@ -53,7 +53,8 @@
 
         // 正方体
         var geometry = new THREE.BoxGeometry(100, 100, 100);
-        var material = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        var texture = loader.load('../common/texture/crate.jpg');
+        var material = new THREE.MeshPhongMaterial({ color: 0xcccccc, map: texture });
         var box = new THREE.Mesh(geometry, material);
         box.position.set(-Math.PI / 2, -100, 0);
         box.castShadow = true;

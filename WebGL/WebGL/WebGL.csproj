@@ -249,6 +249,7 @@
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.src.js" />
     <Content Include="threejs例子\01_地面\index.html" />
+    <Content Include="threejs例子\common\texture\crate.jpg" />
     <Content Include="threejs例子\布\index.html" />
     <Content Include="threejs例子\common\css\common.css" />
     <Content Include="threejs例子\common\js\Cloth.js" />
