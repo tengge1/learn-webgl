@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="glsl教程\01_最简单的着色器语言程序\index.html" />
     <Content Include="hewebgl教程\01_开启ThreeJs之旅\index.html" />
     <Content Include="hewebgl教程\02_还记得点线面吗\index.html" />
     <Content Include="hewebgl教程\03_让场景动起来\index.html" />
