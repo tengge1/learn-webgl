@@ -66,7 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="glsl教程\01_最简单的着色器语言程序\index.html" />
+    <Content Include="WegGL教程\01_最简单的WegGL程序\index.html" />
     <Content Include="hewebgl教程\01_开启ThreeJs之旅\index.html" />
     <Content Include="hewebgl教程\02_还记得点线面吗\index.html" />
     <Content Include="hewebgl教程\03_让场景动起来\index.html" />
@@ -203,6 +203,8 @@
     <Content Include="hewebgl教程\video\sintel.webm" />
     <Content Include="hewebgl教程\model\male\male02.obj" />
     <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
+    <Content Include="WegGL教程\02_WebGL的坐标轴\index.html" />
+    <Content Include="WegGL教程\03_WebGL颜色\index.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -298,6 +300,7 @@
     <Folder Include="hiwebgl_threejs\15_高光贴图\" />
     <Folder Include="hiwebgl_threejs\16_渲染到纹理\" />
     <Folder Include="threejs教程\model\" />
+    <Folder Include="WegGL教程\04_WebGL贴图\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
