@@ -204,7 +204,7 @@
     <Content Include="hewebgl教程\model\male\male02.obj" />
     <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
     <Content Include="WegGL教程\02_传递颜色给着色器\index.html" />
-    <Content Include="WegGL教程\03_使用着色器实现颜色渐变\index.html" />
+    <Content Include="WegGL教程\03_传递贴图给着色器\index.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

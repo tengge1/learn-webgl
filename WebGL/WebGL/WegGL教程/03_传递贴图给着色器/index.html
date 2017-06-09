@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>02_传递颜色给着色器</title>
+    <title>03_传递贴图给着色器</title>
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
@@ -76,8 +76,8 @@
             // 颜色
             var colors = [
                 1.0, 0.0, 0.0, 1.0,
-                1.0, 0.0, 0.0, 1.0,
-                1.0, 0.0, 0.0, 1.0
+                0.0, 1.0, 0.0, 1.0,
+                0.0, 0.0, 1.0, 1.0
             ];
             var buffer2 = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
@@ -88,7 +88,7 @@
             gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
 
             // 绘制
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
         }
     </script>
 </head>
