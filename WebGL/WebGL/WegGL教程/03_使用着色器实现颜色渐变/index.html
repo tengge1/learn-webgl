@@ -4,23 +4,27 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>02_WebGL的坐标轴</title>
+    <title>02_传递颜色给着色器</title>
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 position;
+        attribute vec3 position; // 位置
+        attribute vec4 color; // 颜色
+        varying vec4 vColor;
 
         void main(void) {
         gl_Position = vec4(position, 1.0);
+        vColor = color;
         }
     </script>
 
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
+        varying vec4 vColor;
 
         void main(void) {
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        gl_FragColor = vColor;
         }
     </script>
 
@@ -55,21 +59,33 @@
             gl.linkProgram(shaderProgram);
             gl.useProgram(shaderProgram);
 
-            // 缓存
-            var buffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-
             // 顶点
             var vertices = [
                  -0.5, -0.5, 0.0,
                  0.5, -0.5, 0.0,
                  0.0, 0.5, 0.0
             ];
+            var buffer1 = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer1);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            var position = gl.getAttribLocation(shaderProgram, "position");
+            var position = gl.getAttribLocation(shaderProgram, 'position');
             gl.enableVertexAttribArray(position);
             gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
+
+            // 颜色
+            var colors = [
+                1.0, 0.0, 0.0, 1.0,
+                1.0, 0.0, 0.0, 1.0,
+                1.0, 0.0, 0.0, 1.0
+            ];
+            var buffer2 = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+            var color = gl.getAttribLocation(shaderProgram, 'color');
+            gl.enableVertexAttribArray(color);
+            gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
 
             // 绘制
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
