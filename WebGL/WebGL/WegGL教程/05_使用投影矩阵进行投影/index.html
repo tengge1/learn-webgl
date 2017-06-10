@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>05_使用投影矩阵进行投影</title>
+    <script src="../js/three.js"></script>
+
+    <!-- 顶点着色器 -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition; // 顶点坐标
+        uniform mat4 uPMatrix; // 投影矩阵
+        uniform mat4 uMVMatrix; // 位移矩阵
+
+        void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        }
+    </script>
+
+    <!-- 片源着色器 -->
+    <script id="shader-fs" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColor;
+
+        void main(void) {
+        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+        }
+    </script>
+
+    <script type="text/javascript">
+        var start = function () {
+            // 上下文环境
+            var canvas = document.getElementById("mycanvas");
+            var gl = canvas.getContext("experimental-webgl");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+            gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            gl.enable(gl.DEPTH_TEST);
+
+            // 顶点着色器
+            var shader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.compileShader(shader);
+            var vertexShader = shader;
+
+            // 片源着色器
+            var shader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.compileShader(shader);
+            var fragmentShader = shader;
+
+            // 着色器程序
+            var shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+            gl.useProgram(shaderProgram);
+
+            // 获取参数地址
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+            gl.enableVertexAttribArray(vertexPositionAttr);
+            var pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+            var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+
+            // 顶点
+            var vertices = [
+                // 前面四个顶点
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 -0.5, 0.5, -0.5,
+
+                 // 后面四个顶点
+                 -0.5, -0.5, 0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
+            ];
+            var vertexPositionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+            // 索引
+            var vertexIndices = [
+                // 前面
+                0, 1, 2,
+                0, 2, 3,
+
+                // 后面
+                4, 5, 6,
+                4, 6, 7,
+
+                // 左面
+                4, 0, 3,
+                4, 3, 7,
+
+                // 右面
+                1, 5, 6,
+                1, 6, 2,
+
+                // 上面
+                3, 2, 6,
+                3, 6, 7,
+
+                // 下面
+                0, 1, 5,
+                0, 5, 4
+            ];
+            var vertexIndexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
+
+            // 投影矩阵
+            var camera = new THREE.PerspectiveCamera(45, gl.viewportWidth / gl.viewportWidth, 0.1, 1000);
+            var projection = camera.projectionMatrix;
+
+            // 渲染循环
+            var x = 0, y = 0, z = 0;
+            var render = function () {
+                // 清屏
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+                // 顶点
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+                gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
+
+                // 投影矩阵
+                gl.uniformMatrix4fv(pMatrixUniform, false, projection.toArray());
+
+                // 位移矩阵
+                var euler = new THREE.Euler(x, y, z);
+                var mat = new THREE.Matrix4();
+                mat.makeRotationFromEuler(euler);
+                gl.uniformMatrix4fv(mvMatrixUniform, false, mat.toArray());
+
+                // 绘制
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+                gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+
+                x += 0.01;
+                y += 0.01;
+                z += 0.01;
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+    </script>
+</head>
+
+<body onload="start();">
+    <canvas id="mycanvas" style="border: none;" width="500" height="500"></canvas>
+</body>
+
+</html>
