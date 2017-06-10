@@ -4,28 +4,26 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>03_传递贴图给着色器</title>
+    <title>04_绘制正方体和位移矩阵</title>
+    <script src="../js/three.js"></script>
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition;
-        attribute vec2 aTextureCoord;
-        varying vec2 vTextureCoord;
+        attribute vec3 aVertexPosition; // 顶点坐标
+        uniform mat4 uMVMatrix; // 位移矩阵
 
         void main(void) {
-        gl_Position = vec4(aVertexPosition, 1.0);
-        vTextureCoord = aTextureCoord;
+        gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
         }
     </script>
 
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
-        varying vec2 vTextureCoord;
-        uniform sampler2D uSampler;
+        varying vec4 vColor;
 
         void main(void) {
-        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
         }
     </script>
 
@@ -38,7 +36,6 @@
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
             gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
@@ -63,16 +60,21 @@
             // 获取参数地址
             var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
             gl.enableVertexAttribArray(vertexPositionAttr);
-            var textureCoordAttr = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
-            gl.enableVertexAttribArray(textureCoordAttr);
-            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
+            var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 
             // 顶点
             var vertices = [
-                 -0.5, -0.5, 0.0,
-                 0.5, -0.5, 0.0,
-                 0.5, 0.5, 0.0,
-                 -0.5, 0.5, 0.0
+                // 前面四个顶点
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 -0.5, 0.5, -0.5,
+
+                 // 后面四个顶点
+                 -0.5, -0.5, 0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
             ];
             var vertexPositionBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -80,57 +82,57 @@
 
             // 索引
             var vertexIndices = [
-                0, 1, 2, 
-                0, 2, 3
+                // 前面
+                0, 1, 2,
+                0, 2, 3,
+
+                // 后面
+                4, 5, 6,
+                4, 6, 7,
+
+                // 左面
+                4, 0, 3,
+                4, 3, 7,
+
+                // 右面
+                1, 5, 6,
+                1, 6, 2,
+
+                // 上面
+                3, 2, 6,
+                3, 6, 7,
+
+                // 下面
+                0, 1, 5,
+                0, 5, 4
             ];
             var vertexIndexBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
-            // uv坐标
-            var textureCoords = [
-                0.0, 0.0,
-                1.0, 0.0,
-                1.0, 1.0,
-                0.0, 1.0
-            ];
-            var vertexTextureCoordBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
-
-            // 贴图
-            var texture = gl.createTexture();
-            texture.image = new Image();
-            texture.image.onload = function () {
-                gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-                gl.bindTexture(gl.TEXTURE_2D, null);
-
-            }
-            texture.image.src = "../image/nehe.gif";
-
-            var render = function () { // 渲染循环
+            // 渲染循环
+            var x = 0, y = 0, z = 0;
+            var render = function () {
+                // 清屏
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
                 // 顶点
                 gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
                 gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
 
-                // uv坐标
-                gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
-                gl.vertexAttribPointer(textureCoordAttr, 2, gl.FLOAT, false, 0, 0);
+                // 位移矩阵
+                var euler = new THREE.Euler(x, y, z);
+                var mat = new THREE.Matrix4();
+                mat.makeRotationFromEuler(euler);
+                gl.uniformMatrix4fv(mvMatrixUniform, false, mat.toArray());
 
-                // 贴图
-                gl.activeTexture(gl.TEXTURE0);
-                gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.uniform1i(samplerUniform, 0);
-
-                // 画图
+                // 绘制
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
-                gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+                gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+
+                x += 0.01;
+                y += 0.01;
+                z += 0.01;
                 requestAnimationFrame(render);
             }
             render();

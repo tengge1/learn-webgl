@@ -205,7 +205,9 @@
     <Content Include="mozilla教程\08_动画贴图\Firefox.ogv" />
     <Content Include="WegGL教程\02_传递颜色给着色器\index.html" />
     <Content Include="WegGL教程\03_传递贴图给着色器\index.html" />
-    <Content Include="WegGL教程\03_传递贴图给着色器\nehe.gif" />
+    <Content Include="WegGL教程\04_绘制正方体和位移矩阵\index.html" />
+    <Content Include="WegGL教程\image\nehe.gif" />
+    <Content Include="WegGL教程\js\three.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
