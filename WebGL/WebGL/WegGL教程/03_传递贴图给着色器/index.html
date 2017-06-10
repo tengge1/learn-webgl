@@ -8,19 +8,24 @@
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 position;
+        attribute vec3 aVertexPosition;
+        attribute vec2 aTextureCoord;
+        varying vec2 vTextureCoord;
 
         void main(void) {
-        gl_Position = vec4(position, 1.0);
+        gl_Position = vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
         }
     </script>
 
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
+        varying vec2 vTextureCoord;
+        uniform sampler2D uSampler;
 
         void main(void) {
-        gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
         }
     </script>
 
@@ -55,6 +60,13 @@
             gl.linkProgram(shaderProgram);
             gl.useProgram(shaderProgram);
 
+            // 获取参数地址
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+            gl.enableVertexAttribArray(vertexPositionAttr);
+            var textureCoordAttr = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
+            gl.enableVertexAttribArray(textureCoordAttr);
+            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
+
             // 顶点
             var vertices = [
                  -0.5, -0.5, 0.0,
@@ -62,15 +74,30 @@
                  0.5, 0.5, 0.0,
                  -0.5, 0.5, 0.0
             ];
-            var buffer1 = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer1);
+            var vertexPositionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            var position = gl.getAttribLocation(shaderProgram, 'position');
-            gl.enableVertexAttribArray(position);
-            gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
+            // 索引
+            var vertexIndices = [
+                0, 1, 2, 0, 2, 3
+            ];
+            var vertexIndexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
-            // 下载贴图
+            // uv坐标
+            var textureCoords = [
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0
+            ];
+            var vertexTextureCoordBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
+
+            // 贴图
             var texture = gl.createTexture();
             texture.image = new Image();
             texture.image.onload = function () {
@@ -80,32 +107,32 @@
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
                 gl.bindTexture(gl.TEXTURE_2D, null);
+
             }
-            neheTexture.image.src = "yingtao.jpg";
+            texture.image.src = "nehe.gif";
 
-            // uv坐标
-            var buffer2 = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
-            var textureCoords = [
-              0.0, 0.0,
-              1.0, 0.0,
-              1.0, 1.0,
-              0.0, 1.0
-            ];
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
-            var textureAttr = gl.getAttribLocation(shaderProgram, 'texture');
-            gl.enableVertexAttribArray(textureAttr);
-            gl.vertexAttribPointer(textureAttr, 2, gl.FLOAT, false, 0, 0);
+            var render = function () { // 渲染循环
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            // 绘制
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-            gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, neheTexture);
-            gl.uniform1i(shaderProgram.samplerUniform, 0);
+                // 顶点
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+                gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
 
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-            setMatrixUniforms();
-            gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+                // uv坐标
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
+                gl.vertexAttribPointer(textureCoordAttr, 2, gl.FLOAT, false, 0, 0);
+
+                // 贴图
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.uniform1i(samplerUniform, 0);
+
+                // 画图
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+                gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+                requestAnimationFrame(render);
+            }
+            render();
         }
     </script>
 </head>
