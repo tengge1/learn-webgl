@@ -67,16 +67,16 @@
             // 顶点
             var vertices = [
                 // 前面四个顶点
-                 -0.5, -0.5, -0.5,
-                 0.5, -0.5, -0.5,
-                 0.5, 0.5, -0.5,
-                 -0.5, 0.5, -0.5,
+                 -10, -10, -10,
+                 10, -10, -10,
+                 10, 10, -10,
+                 -10, 10, -10,
 
                  // 后面四个顶点
-                 -0.5, -0.5, 0.5,
-                 0.5, -0.5, 0.5,
-                 0.5, 0.5, 0.5,
-                 -0.5, 0.5, 0.5,
+                 -10, -10, 10,
+                 10, -10, 10,
+                 10, 10, 10,
+                 -10, 10, 10
             ];
             var vertexPositionBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -113,8 +113,8 @@
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
             // 投影矩阵
-            var camera = new THREE.PerspectiveCamera(45, gl.viewportWidth / gl.viewportWidth, 0.1, 1000);
-            var projection = camera.projectionMatrix;
+            var mat = new THREE.Matrix4();
+            var projection = mat.makePerspective(-50, 50, 50, -50, 1, 1000);
 
             // 渲染循环
             var x = 0, y = 0, z = 0;
