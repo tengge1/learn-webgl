@@ -10,11 +10,14 @@
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
         attribute vec3 aVertexPosition; // 顶点坐标
+        attribute vec4 aVertexColor; // 颜色
+        varying vec4 vColor;
         uniform mat4 uPMatrix; // 投影矩阵
         uniform mat4 uMVMatrix; // 位移矩阵
 
         void main(void) {
         gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
         }
     </script>
 
@@ -24,7 +27,7 @@
         varying vec4 vColor;
 
         void main(void) {
-        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+        gl_FragColor = vColor;
         }
     </script>
 
@@ -61,6 +64,8 @@
             // 获取参数地址
             var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
             gl.enableVertexAttribArray(vertexPositionAttr);
+            var vertexColorAttr = gl.getAttribLocation(shaderProgram, 'aVertexColor');
+            gl.enableVertexAttribArray(vertexColorAttr);
             var pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
             var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 
@@ -112,6 +117,21 @@
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
+            // 颜色
+            var colors = [
+                1.0, 0.0, 0.0, 1.0,
+                0.0, 1.0, 0.0, 1.0,
+                0.0, 0.0, 1.0, 1.0,
+                1.0, 1.0, 0.0, 1.0,
+                0.0, 1.0, 1.0, 1.0,
+                1.0, 0.0, 1.0, 1.0,
+                0.3, 0.3, 0.3, 1.0,
+                0.7, 0.7, 0.7, 1.0
+            ];
+            var colorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
             // 投影矩阵
             var mat = new THREE.Matrix4();
             var projection = mat.makePerspective(-50, 50, 50, -50, 1, 1000);
@@ -125,6 +145,10 @@
                 // 顶点
                 gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
                 gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
+
+                // 颜色
+                gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+                gl.vertexAttribPointer(vertexColorAttr, 4, gl.FLOAT, false, 0, 0);
 
                 // 投影矩阵
                 gl.uniformMatrix4fv(pMatrixUniform, false, projection.toArray());
