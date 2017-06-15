@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>09_键盘输入</title>
+    <script src="../js/three.js"></script>
+
+    <!-- 顶点着色器 -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition;
+        attribute vec2 aTextureCoord;
+        varying vec2 vTextureCoord;
+        uniform mat4 uMVMatrix;
+
+        void main(void) {
+        gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
+        }
+    </script>
+
+    <!-- 片源着色器 -->
+    <script id="shader-fs" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec2 vTextureCoord;
+        uniform sampler2D uSampler;
+
+        void main(void) {
+        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        }
+    </script>
+
+    <script type="text/javascript">
+        var start = function () {
+            // 上下文环境
+            var canvas = document.getElementById("mycanvas");
+            var gl = canvas.getContext("experimental-webgl");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+            gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            gl.enable(gl.DEPTH_TEST);
+
+            // 顶点着色器
+            var shader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.compileShader(shader);
+            var vertexShader = shader;
+
+            // 片源着色器
+            var shader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.compileShader(shader);
+            var fragmentShader = shader;
+
+            // 着色器程序
+            var shaderProgram = gl.createProgram();
+            gl.attachShader(shaderProgram, vertexShader);
+            gl.attachShader(shaderProgram, fragmentShader);
+            gl.linkProgram(shaderProgram);
+            gl.useProgram(shaderProgram);
+
+            // 获取参数地址
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+            gl.enableVertexAttribArray(vertexPositionAttr);
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+            gl.enableVertexAttribArray(vertexPositionAttr);
+            var textureCoordAttr = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
+            gl.enableVertexAttribArray(textureCoordAttr);
+            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
+            var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+
+            // 顶点
+            var vertices = [
+                // 前面
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 -0.5, 0.5, -0.5,
+
+                 // 后面
+                 -0.5, -0.5, 0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 左面
+                 -0.5, -0.5, 0.5,
+                 -0.5, -0.5, -0.5,
+                 -0.5, 0.5, -0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 右面
+                 0.5, -0.5, -0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 0.5, 0.5, -0.5,
+
+                 // 上面
+                 -0.5, 0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 下面
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, -0.5, 0.5,
+                 -0.5, -0.5, 0.5,
+            ];
+            var vertexPositionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+            // 索引
+            var vertexIndices = [
+                // 前面
+                0, 1, 2,
+                0, 2, 3,
+
+                // 后面
+                4, 5, 6,
+                4, 6, 7,
+
+                // 左面
+                8, 9, 10,
+                8, 10, 11,
+
+                // 右面
+                12, 13, 14,
+                12, 14, 15,
+
+                // 上面
+                16, 17, 18,
+                16, 18, 19,
+
+                // 下面
+                20, 21, 22,
+                20, 22, 23
+            ];
+            var vertexIndexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
+
+            // 纹理坐标
+            var textureCoords = [
+                // 前面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0,
+
+                // 后面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0,
+
+                // 左面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0,
+
+                // 右面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0,
+
+                // 上面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0,
+
+                // 下面
+                0.0, 0.0,
+                1.0, 0.0,
+                1.0, 1.0,
+                0.0, 1.0
+            ];
+            var vertexTextureCoordBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
+
+            // 纹理
+            var filter = 0; // 纹理过滤类型（0-最近点过滤，1-线性过滤）
+            var texture = gl.createTexture();
+            texture.image = new Image();
+            texture.image.onload = function () {
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+
+                if (filter == 0) { // 最近点过滤
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+                } else if (filter == 1) { // 线性过滤
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                }
+
+                gl.bindTexture(gl.TEXTURE_2D, null);
+            }
+            texture.image.src = "../image/crate.gif";
+
+            // 渲染循环
+            var x = 0, y = 0, z = 0;
+            var rotateSpeed = 0.01; // 旋转速度
+            var scale = 1.0; // 缩放级别
+            var render = function () {
+                // 清屏
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+                // 顶点
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+                gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
+
+                // 纹理坐标
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
+                gl.vertexAttribPointer(textureCoordAttr, 2, gl.FLOAT, false, 0, 0);
+
+                // 纹理
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.uniform1i(samplerUniform, 0);
+
+                // 位移矩阵和缩放矩阵
+                var euler = new THREE.Euler(x, y, z);
+                var mat1 = new THREE.Matrix4();
+                mat1.makeRotationFromEuler(euler);
+                var mat2 = new THREE.Matrix4();
+                mat2.makeScale(scale, scale, scale);
+                gl.uniformMatrix4fv(mvMatrixUniform, false, mat1.multiply(mat2).toArray());
+
+                // 绘制
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
+                gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+
+                x += rotateSpeed;
+                y += rotateSpeed;
+                z += rotateSpeed;
+                requestAnimationFrame(render);
+            }
+
+            // 键盘输入
+            document.onkeypress = function (event) {
+                var key = String.fromCharCode(event.keyCode).toLowerCase();
+                if (key == 'a') {
+                    rotateSpeed += 0.01;
+                } else if (key == 's') {
+                    rotateSpeed -= 0.01
+                } else if (key == 'd') {
+                    scale += 0.1;
+                } else if (key == 'f') {
+                    scale -= 0.1;
+                }
+                if (rotateSpeed <= 0.0) {
+                    rotateSpeed = 0.0;
+                }
+                if (scale <= 0.0) {
+                    scale = 0.0;
+                }
+                if (scale >= 2.0) {
+                    scale = 2.0;
+                }
+            }
+
+            render();
+        }
+    </script>
+</head>
+
+<body onload="start();">
+    <canvas id="mycanvas" style="border: none;" width="500" height="500"></canvas>
+</body>
+
+</html>
