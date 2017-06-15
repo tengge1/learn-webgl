@@ -209,6 +209,7 @@
     <Content Include="WegGL教程\05_使用投影矩阵进行投影\index.html" />
     <Content Include="WegGL教程\06_给正方体六个面着色\index.html" />
     <Content Include="WegGL教程\07_给正方体六个面贴图\index.html" />
+    <Content Include="WegGL教程\08_纹理过滤\index.html" />
     <Content Include="WegGL教程\image\nehe.gif" />
     <Content Include="WegGL教程\js\three.js" />
     <None Include="Web.Debug.config">
