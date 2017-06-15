@@ -87,7 +87,7 @@
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
-            // uv坐标
+            // 纹理坐标
             var textureCoords = [
                 0.0, 0.0,
                 1.0, 0.0,
@@ -98,7 +98,7 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
 
-            // 贴图
+            // 纹理
             var texture = gl.createTexture();
             texture.image = new Image();
             texture.image.onload = function () {
@@ -123,7 +123,7 @@
                 gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
                 gl.vertexAttribPointer(textureCoordAttr, 2, gl.FLOAT, false, 0, 0);
 
-                // 贴图
+                // 纹理
                 gl.activeTexture(gl.TEXTURE0);
                 gl.bindTexture(gl.TEXTURE_2D, texture);
                 gl.uniform1i(samplerUniform, 0);
