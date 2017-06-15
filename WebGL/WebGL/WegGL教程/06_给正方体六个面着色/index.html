@@ -10,14 +10,13 @@
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
         attribute vec3 aVertexPosition; // 顶点坐标
-        //attribute vec4 aVertexColor; // 颜色
-        //varying vec4 vColor;
-        uniform mat4 uPMatrix; // 投影矩阵
+        attribute vec4 aVertexColor; // 颜色
+        varying vec4 vColor;
         uniform mat4 uMVMatrix; // 位移矩阵
 
         void main(void) {
-        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-        //vColor = aVertexColor;
+        gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
         }
     </script>
 
@@ -27,7 +26,7 @@
         varying vec4 vColor;
 
         void main(void) {
-        gl_FragColor = vec4(0.0,1.0,1.0,1.0);
+        gl_FragColor = vColor;
         }
     </script>
 
@@ -71,17 +70,41 @@
 
             // 顶点
             var vertices = [
-                // 前面四个顶点
-                 -10, -10, -10,
-                 10, -10, -10,
-                 10, 10, -10,
-                 -10, 10, -10,
+                // 前面
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 -0.5, 0.5, -0.5,
 
-                 // 后面四个顶点
-                 -10, -10, 10,
-                 10, -10, 10,
-                 10, 10, 10,
-                 -10, 10, 10
+                 // 后面
+                 -0.5, -0.5, 0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 左面
+                 -0.5, -0.5, 0.5,
+                 -0.5, -0.5, -0.5,
+                 -0.5, 0.5, -0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 右面
+                 0.5, -0.5, -0.5,
+                 0.5, -0.5, 0.5,
+                 0.5, 0.5, 0.5,
+                 0.5, 0.5, -0.5,
+
+                 // 上面
+                 -0.5, 0.5, -0.5,
+                 0.5, 0.5, -0.5,
+                 0.5, 0.5, 0.5,
+                 -0.5, 0.5, 0.5,
+
+                 // 下面
+                 -0.5, -0.5, -0.5,
+                 0.5, -0.5, -0.5,
+                 0.5, -0.5, 0.5,
+                 -0.5, -0.5, 0.5,
             ];
             var vertexPositionBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -98,43 +121,66 @@
                 4, 6, 7,
 
                 // 左面
-                4, 0, 3,
-                4, 3, 7,
+                8, 9, 10,
+                8, 10, 11,
 
                 // 右面
-                1, 5, 6,
-                1, 6, 2,
+                12, 13, 14,
+                12, 14, 15,
 
                 // 上面
-                3, 2, 6,
-                3, 6, 7,
+                16, 17, 18,
+                16, 18, 19,
 
                 // 下面
-                0, 1, 5,
-                0, 5, 4
+                20, 21, 22,
+                20, 22, 23
             ];
             var vertexIndexBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
             // 颜色
-            var colors = [
+            var vertexColors = [
+                // 前面
                 1.0, 0.0, 0.0, 1.0,
-                0.0, 1.0, 0.0, 1.0,
-                0.0, 0.0, 1.0, 1.0,
-                1.0, 1.0, 0.0, 1.0,
-                0.0, 1.0, 1.0, 1.0,
-                1.0, 0.0, 1.0, 1.0,
-                0.3, 0.3, 0.3, 1.0,
-                0.7, 0.7, 0.7, 1.0
-            ];
-            var colorBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+                1.0, 0.0, 0.0, 1.0,
+                1.0, 0.0, 0.0, 1.0,
+                1.0, 0.0, 0.0, 1.0,
 
-            // 投影矩阵
-            var camera = new THREE.PerspectiveCamera(45, gl.viewportWidth / gl.viewportHeight, 0.1, 10000);
-            projection = camera.projectionMatrix;
+                // 后面
+                0.0, 1.0, 0.0, 1.0,
+                0.0, 1.0, 0.0, 1.0,
+                0.0, 1.0, 0.0, 1.0,
+                0.0, 1.0, 0.0, 1.0,
+
+                // 左面
+                0.0, 0.0, 1.0, 1.0,
+                0.0, 0.0, 1.0, 1.0,
+                0.0, 0.0, 1.0, 1.0,
+                0.0, 0.0, 1.0, 1.0,
+
+                // 右面
+                1.0, 1.0, 0.0, 1.0,
+                1.0, 1.0, 0.0, 1.0,
+                1.0, 1.0, 0.0, 1.0,
+                1.0, 1.0, 0.0, 1.0,
+
+                // 上面
+                0.0, 1.0, 1.0, 1.0,
+                0.0, 1.0, 1.0, 1.0,
+                0.0, 1.0, 1.0, 1.0,
+                0.0, 1.0, 1.0, 1.0,
+
+                // 下面
+                1.0, 0.0, 1.0, 1.0,
+                1.0, 0.0, 1.0, 1.0,
+                1.0, 0.0, 1.0, 1.0,
+                1.0, 0.0, 1.0, 1.0
+            ];
+            var vertexColorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
 
             // 渲染循环
             var x = 0, y = 0, z = 0;
@@ -147,17 +193,13 @@
                 gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
 
                 // 颜色
-                //gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                //gl.vertexAttribPointer(vertexColorAttr, 4, gl.FLOAT, false, 0, 0);
-
-                // 投影矩阵
-                gl.uniformMatrix4fv(pMatrixUniform, false, projection.toArray());
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
+                gl.vertexAttribPointer(vertexColorAttr, 4, gl.FLOAT, false, 0, 0);
 
                 // 位移矩阵
                 var euler = new THREE.Euler(x, y, z);
                 var mat = new THREE.Matrix4();
                 mat.makeRotationFromEuler(euler);
-                mat.setPosition(new THREE.Vector3(0, 0, -100));
                 gl.uniformMatrix4fv(mvMatrixUniform, false, mat.toArray());
 
                 // 绘制
