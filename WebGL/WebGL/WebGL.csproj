@@ -213,6 +213,7 @@
     <Content Include="WegGL教程\09_键盘输入\index.html" />
     <Content Include="WegGL教程\10_环境光\index.html" />
     <Content Include="WegGL教程\11_平行光\index.html" />
+    <Content Include="WegGL教程\12_平行光和环境光\index.html" />
     <Content Include="WegGL教程\image\crate.gif" />
     <Content Include="WegGL教程\image\nehe.gif" />
     <Content Include="WegGL教程\js\three.js" />
@@ -262,7 +263,7 @@
     <Content Include="mozilla教程\02_绘制2D物体\index.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.js" />
     <Content Include="mozilla教程\02_绘制2D物体\sylvester.src.js" />
-    <Content Include="threejs例子\01_地面\index.html" />
+    <Content Include="threejs例子\地面\index.html" />
     <Content Include="threejs例子\common\texture\crate.jpg" />
     <Content Include="threejs例子\布\index.html" />
     <Content Include="threejs例子\common\css\common.css" />
