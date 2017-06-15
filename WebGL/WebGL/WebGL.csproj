@@ -211,6 +211,7 @@
     <Content Include="WegGL教程\07_给正方体六个面贴图\index.html" />
     <Content Include="WegGL教程\08_纹理过滤\index.html" />
     <Content Include="WegGL教程\09_键盘输入\index.html" />
+    <Content Include="WegGL教程\10_环境光\index.html" />
     <Content Include="WegGL教程\image\crate.gif" />
     <Content Include="WegGL教程\image\nehe.gif" />
     <Content Include="WegGL教程\js\three.js" />
