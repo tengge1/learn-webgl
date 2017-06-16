@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>05_渲染器</title>
+    <link href="../common/css/common.css" rel="stylesheet" />
+    <script src="../common/js/three.js"></script>
+</head>
+<body>
+    <canvas id="mycanvas"></canvas>
+    <script>
+        // 场景
+        var scene = new THREE.Scene();
+
+        // 相机
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+
+        // 渲染器
+        var renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mycanvas'),
+            precision: 'lowp',
+            alpha: true,
+            antialias: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+
+        // 灯光
+        var light = new THREE.DirectionalLight(0xffffff, 1.0);
+        light.position.set(1000, 2000, 2000);
+        light.lookAt(new THREE.Vector3(0, 0, 0));
+        scene.add(light);
+
+        // 正方体
+        var geometry = new THREE.BoxGeometry(300, 300, 300);
+        var material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        cube.position.set(0, 0, 0);
+
+        camera.position.set(500, 500, 500);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // 渲染循环
+        function render() {
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -68,6 +68,10 @@
   <ItemGroup>
     <Content Include="threejs例子\01_场景\01_场景.html" />
     <Content Include="threejs例子\02_雾效\02_雾效.html" />
+    <Content Include="threejs例子\03_透视相机\03_透视相机.html" />
+    <Content Include="threejs例子\04_正交相机\04_正交相机.html" />
+    <Content Include="threejs例子\05_渲染器\05_渲染器.html" />
+    <Content Include="threejs例子\06_影子\06_影子.html" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
     <Content Include="threejs例子\common\texture\cube\nz.png" />

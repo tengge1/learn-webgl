@@ -28,8 +28,6 @@
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-        renderer.gammaInput = true;
-        renderer.gammaOutput = true;
 
         // 鼠标控制
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
