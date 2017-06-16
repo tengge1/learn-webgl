@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>01_场景</title>
+    <link href="../common/css/common.css" rel="stylesheet" />
+    <script src="../common/js/three.js"></script>
+    <script src="../common/js/OrbitControls.js"></script>
+</head>
+<body>
+    <script>
+        // 场景
+        var scene = new THREE.Scene();
+
+        // 正方体贴图
+        var loader = new THREE.CubeTextureLoader();
+        loader.setPath('../common/texture/cube/');
+        var textureCube = loader.load([ // 左、右、上、下、后、前
+            'px.png', 'nx.png',
+            'py.png', 'ny.png',
+            'pz.png', 'nz.png']);
+        scene.background = textureCube;
+
+        // 相机
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 渲染器
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        renderer.gammaInput = true;
+        renderer.gammaOutput = true;
+
+        // 鼠标控制
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI * 0.5;
+        controls.minDistance = 1000;
+        controls.maxDistance = 7500;
+
+        // 渲染循环
+        function render() {
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>

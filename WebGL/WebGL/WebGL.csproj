@@ -66,6 +66,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="threejs例子\01_场景\01_场景.html" />
+    <Content Include="threejs例子\02_雾效\02_雾效.html" />
+    <Content Include="threejs例子\common\texture\cube\nx.png" />
+    <Content Include="threejs例子\common\texture\cube\ny.png" />
+    <Content Include="threejs例子\common\texture\cube\nz.png" />
+    <Content Include="threejs例子\common\texture\cube\px.png" />
+    <Content Include="threejs例子\common\texture\cube\py.png" />
+    <Content Include="threejs例子\common\texture\cube\pz.png" />
+    <Content Include="threejs例子\网格\网格.html" />
     <Content Include="WegGL教程\01_最简单的WegGL程序\index.html" />
     <Content Include="hewebgl教程\01_开启ThreeJs之旅\index.html" />
     <Content Include="hewebgl教程\02_还记得点线面吗\index.html" />
