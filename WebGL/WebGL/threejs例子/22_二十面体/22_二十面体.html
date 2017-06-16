@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>15_顶点法线帮助器</title>
+    <title>22_二十面体</title>
     <link href="../common/css/common.css" rel="stylesheet" />
     <script src="../common/js/three.js"></script>
     <script src="../common/js/OrbitControls.js"></script>
@@ -21,10 +21,12 @@
         document.body.appendChild(renderer.domElement);
 
         // 灯光
-        var light = new THREE.DirectionalLight(0xffffff, 1.0);
-        light.position.set(200, 200, 200);
-        light.lookAt(new THREE.Vector3(0, 0, 0));
-        scene.add(light);
+        var light1 = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(light1);
+        var light2 = new THREE.DirectionalLight(0xffffff, 0.8);
+        scene.add(light2);
+        light2.position.set(200, 200, 200);
+        light2.lookAt(new THREE.Vector3(0, 0, 0));
 
         // 平板
         var geometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
@@ -34,19 +36,15 @@
         plane.position.set(0, -160, 0);
         plane.rotation.set(Math.PI / 2, 0, 0);
 
-        // 正方体
-        var geometry = new THREE.BoxGeometry(100, 100, 100);
+        // 几何体
+        var geometry = new THREE.IcosahedronGeometry(100);
         var material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-        cube.position.set(100, 0, 100);
+        var mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        mesh.position.set(100, 0, 100);
 
         camera.position.set(500, 500, 200);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-        // 顶点法线帮助器
-        var helper = new THREE.VertexNormalsHelper(cube, 20, 0x00ff00, 2);
-        scene.add(helper);
 
         // 鼠标控制
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -54,8 +52,8 @@
 
         // 渲染循环
         function render() {
-            //cube.rotation.x += 0.01;
-            //cube.rotation.y += 0.01;
+            mesh.rotation.x += 0.01;
+            mesh.rotation.y += 0.01;
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         }

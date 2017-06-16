@@ -81,6 +81,13 @@
     <Content Include="threejs例子\13_网格帮助器\13_网格帮助器.html" />
     <Content Include="threejs例子\14_极坐标帮助器\14_极坐标帮助器.html" />
     <Content Include="threejs例子\15_顶点法线帮助器\15_顶点法线帮助器.html" />
+    <Content Include="threejs例子\16_正方体\16_正方体.html" />
+    <Content Include="threejs例子\17_圆形\17_圆形.html" />
+    <Content Include="threejs例子\18_锥体\18_锥体.html" />
+    <Content Include="threejs例子\19_圆柱体\19_圆柱体.html" />
+    <Content Include="threejs例子\20_十二面体\20_十二面体.html" />
+    <Content Include="threejs例子\21_几何体线框\21_几何体线框.html" />
+    <Content Include="threejs例子\22_二十面体\22_二十面体.html" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
     <Content Include="threejs例子\common\texture\cube\nz.png" />
