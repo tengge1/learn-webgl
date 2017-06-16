@@ -9,7 +9,8 @@
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
         attribute vec3 aVertexPosition;
-        attribute vec2 aTextureCoord;
+        attribute vec2 aTextureCoord; // 纹理坐标
+
         varying vec2 vTextureCoord;
 
         void main(void) {
@@ -21,8 +22,10 @@
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
-        varying vec2 vTextureCoord;
+
         uniform sampler2D uSampler;
+
+        varying vec2 vTextureCoord;
 
         void main(void) {
         gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
@@ -37,19 +40,17 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-vs').textContent);
             gl.compileShader(shader);
             var vertexShader = shader;
 
             // 片源着色器
             var shader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-fs').textContent);
             gl.compileShader(shader);
             var fragmentShader = shader;
 
@@ -67,7 +68,7 @@
             gl.enableVertexAttribArray(textureCoordAttr);
             var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
 
-            // 顶点
+            // 顶点位置
             var vertices = [
                  -0.5, -0.5, 0.0,
                  0.5, -0.5, 0.0,
@@ -78,9 +79,9 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            // 索引
+            // 顶点索引
             var vertexIndices = [
-                0, 1, 2, 
+                0, 1, 2,
                 0, 2, 3
             ];
             var vertexIndexBuffer = gl.createBuffer();
@@ -105,17 +106,21 @@
                 gl.bindTexture(gl.TEXTURE_2D, texture);
                 gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-                gl.bindTexture(gl.TEXTURE_2D, null);
 
+                gl.bindTexture(gl.TEXTURE_2D, null);
             }
             texture.image.src = "../image/nehe.gif";
 
-            var render = function () { // 渲染循环
+            // 渲染循环
+            var render = function () {
+                // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-                // 顶点
+                // 顶点位置
                 gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
                 gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
 
@@ -131,6 +136,7 @@
                 // 画图
                 gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
                 gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+
                 requestAnimationFrame(render);
             }
             render();

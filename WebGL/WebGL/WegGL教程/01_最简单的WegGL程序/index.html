@@ -8,7 +8,7 @@
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition;
+        attribute vec3 aVertexPosition; // 顶点位置
 
         void main(void) {
         gl_Position = vec4(aVertexPosition, 1.0);
@@ -32,7 +32,7 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.enable(gl.DEPTH_TEST);
+            gl.enable(gl.DEPTH_TEST); // 启用深度测试
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
@@ -67,7 +67,7 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            // 绘制
+            // 渲染循环
             var render = function () {
                 // 清屏
                 gl.clearColor(0.0, 0.0, 0.0, 1.0);
