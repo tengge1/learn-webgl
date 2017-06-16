@@ -36,11 +36,11 @@
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
+
+        uniform sampler2D uSampler;
         
         varying vec2 vTextureCoord;
         varying vec3 vLightWeighting;
-
-        uniform sampler2D uSampler;
 
         void main(void) {
         vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
@@ -56,18 +56,17 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-vs').textContent);
             gl.compileShader(shader);
             var vertexShader = shader;
 
             // 片源着色器
             var shader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-fs').textContent);
             gl.compileShader(shader);
             var fragmentShader = shader;
 
@@ -86,11 +85,11 @@
             var textureCoordAttr = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
             gl.enableVertexAttribArray(textureCoordAttr);
             var nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
-            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
             var mvMatrixUniform = gl.getUniformLocation(shaderProgram, 'uMVMatrix');
             var ambientColorUniform = gl.getUniformLocation(shaderProgram, 'uAmbientColor');
             var lightingDirectionUniform = gl.getUniformLocation(shaderProgram, "uLightingDirection");
             var directionalColorUniform = gl.getUniformLocation(shaderProgram, "uDirectionalColor");
+            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
 
             // 顶点位置
             var vertices = [
@@ -134,7 +133,7 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            // 索引
+            // 顶点索引
             var vertexIndices = [
                 // 前面
                 0, 1, 2,
@@ -249,7 +248,6 @@
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
 
             // 纹理
-            var filter = 0; // 纹理过滤类型（0-最近点过滤，1-线性过滤）
             var texture = gl.createTexture();
             texture.image = new Image();
             texture.image.onload = function () {
@@ -257,13 +255,8 @@
                 gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
 
-                if (filter == 0) { // 最近点过滤
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-                } else if (filter == 1) { // 线性过滤
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-                }
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
                 gl.bindTexture(gl.TEXTURE_2D, null);
             }
@@ -275,6 +268,7 @@
             var scale = 1.0; // 缩放级别
             var render = function () {
                 // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
                 // 顶点
@@ -302,7 +296,7 @@
                 lightMat.normalize();
                 lightMat.multiplyScalar(-1);
                 gl.uniform3fv(lightingDirectionUniform, lightMat.toArray()); // 方向
-                gl.uniform3f(directionalColorUniform, 1.0, 1.0, 1.0); // 颜色
+                gl.uniform3f(directionalColorUniform, 1.0, 1.0, 0.0); // 颜色
 
                 // 位移矩阵
                 var mvEuler = new THREE.Euler(x, y, z);

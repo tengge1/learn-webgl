@@ -11,8 +11,10 @@
     <script id="shader-vs" type="x-shader/x-vertex">
         attribute vec3 aVertexPosition;
         attribute vec2 aTextureCoord;
-        varying vec2 vTextureCoord;
+
         uniform mat4 uMVMatrix;
+
+        varying vec2 vTextureCoord;
 
         void main(void) {
         gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -23,8 +25,10 @@
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
-        varying vec2 vTextureCoord;
+
         uniform sampler2D uSampler;
+
+        varying vec2 vTextureCoord;
 
         void main(void) {
         gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
@@ -39,7 +43,6 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
@@ -64,14 +67,12 @@
             // 获取参数地址
             var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
             gl.enableVertexAttribArray(vertexPositionAttr);
-            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
-            gl.enableVertexAttribArray(vertexPositionAttr);
             var textureCoordAttr = gl.getAttribLocation(shaderProgram, 'aTextureCoord');
             gl.enableVertexAttribArray(textureCoordAttr);
-            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
             var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+            var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
 
-            // 顶点
+            // 顶点位置
             var vertices = [
                 // 前面
                  -0.5, -0.5, -0.5,
@@ -113,7 +114,7 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            // 索引
+            // 顶点索引
             var vertexIndices = [
                 // 前面
                 0, 1, 2,
@@ -212,9 +213,10 @@
             var scale = 1.0; // 缩放级别
             var render = function () {
                 // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-                // 顶点
+                // 顶点位置
                 gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
                 gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
 
