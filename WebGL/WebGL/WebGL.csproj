@@ -274,7 +274,6 @@
     <Content Include="threejs教程\01.创建场景.html" />
     <Content Include="threejs教程\02.画线.html" />
     <Content Include="threejs教程\03.立方体贴图.html" />
-    <Content Include="threejs教程\05_加载obj模型.html" />
     <Content Include="threejs教程\04.顶点立方体.html" />
     <Content Include="threejs教程\css\common.css" />
     <Content Include="threejs教程\image\bricks.jpg" />
@@ -292,9 +291,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="threejs教程\model\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
