@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>15_顶点法线帮助器</title>
+    <link href="../common/css/common.css" rel="stylesheet" />
+    <script src="../common/js/three.js"></script>
+    <script src="../common/js/OrbitControls.js"></script>
+</head>
+<body>
+    <script>
+        // 场景
+        var scene = new THREE.Scene();
+
+        // 相机
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+
+        // 渲染器
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 灯光
+        var light = new THREE.DirectionalLight(0xffffff, 1.0);
+        light.position.set(200, 200, 200);
+        light.lookAt(new THREE.Vector3(0, 0, 0));
+        scene.add(light);
+
+        // 平板
+        var geometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+        var material = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+        var plane = new THREE.Mesh(geometry, material);
+        scene.add(plane);
+        plane.position.set(0, -160, 0);
+        plane.rotation.set(Math.PI / 2, 0, 0);
+
+        // 正方体
+        var geometry = new THREE.BoxGeometry(100, 100, 100);
+        var material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        cube.position.set(100, 0, 100);
+
+        camera.position.set(500, 500, 200);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // 极坐标帮助器
+        var helper = new THREE.VertexNormalsHelper(cube, 20, 0x00ff00, 2);
+        scene.add(helper);
+
+        // 鼠标控制
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI * 0.5;
+
+        // 渲染循环
+        function render() {
+            //cube.rotation.x += 0.01;
+            //cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>

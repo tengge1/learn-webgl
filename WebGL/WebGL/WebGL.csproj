@@ -72,6 +72,15 @@
     <Content Include="threejs例子\04_正交相机\04_正交相机.html" />
     <Content Include="threejs例子\05_渲染器\05_渲染器.html" />
     <Content Include="threejs例子\06_影子\06_影子.html" />
+    <Content Include="threejs例子\07_箭头帮助器\07_箭头帮助器.html" />
+    <Content Include="threejs例子\08_坐标帮助器\08_坐标帮助器.html" />
+    <Content Include="threejs例子\09_盒帮助器\09_盒帮助器.html" />
+    <Content Include="threejs例子\10_相机帮助器\10_相机帮助器.html" />
+    <Content Include="threejs例子\11_平行光帮助器\11_平行光帮助器.html" />
+    <Content Include="threejs例子\12_法线帮助器\12_法线帮助器.html" />
+    <Content Include="threejs例子\13_网格帮助器\13_网格帮助器.html" />
+    <Content Include="threejs例子\14_极坐标帮助器\14_极坐标帮助器.html" />
+    <Content Include="threejs例子\15_顶点法线帮助器\15_顶点法线帮助器.html" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
     <Content Include="threejs例子\common\texture\cube\nz.png" />
