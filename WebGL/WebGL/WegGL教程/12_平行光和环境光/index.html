@@ -16,6 +16,8 @@
         uniform mat4 uMVMatrix;
         uniform mat4 uNMatrix;
 
+        uniform vec3 uAmbientColor;
+
         uniform vec3 uLightingDirection;
         uniform vec3 uDirectionalColor;
 
@@ -27,7 +29,7 @@
         vTextureCoord = aTextureCoord;
         vec3 transformedNormal = (uNMatrix * vec4(aVertexNormal, 1.0)).xyz;
         float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-        vLightWeighting = uDirectionalColor * directionalLightWeighting;
+        vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
         }
     </script>
 
@@ -86,6 +88,7 @@
             var nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
             var samplerUniform = gl.getUniformLocation(shaderProgram, 'uSampler');
             var mvMatrixUniform = gl.getUniformLocation(shaderProgram, 'uMVMatrix');
+            var ambientColorUniform = gl.getUniformLocation(shaderProgram, 'uAmbientColor');
             var lightingDirectionUniform = gl.getUniformLocation(shaderProgram, "uLightingDirection");
             var directionalColorUniform = gl.getUniformLocation(shaderProgram, "uDirectionalColor");
 
@@ -291,8 +294,13 @@
                 gl.bindTexture(gl.TEXTURE_2D, texture);
                 gl.uniform1i(samplerUniform, 0);
 
+                // 环境光
+                gl.uniform3f(ambientColorUniform, 0.5, 0.5, 0.5);
+
                 // 平行光
                 var lightMat = new THREE.Vector3(1.0, 1.0, 1.0);
+                lightMat.normalize();
+                lightMat.multiplyScalar(-1);
                 gl.uniform3fv(lightingDirectionUniform, lightMat.toArray()); // 方向
                 gl.uniform3f(directionalColorUniform, 1.0, 1.0, 1.0); // 颜色
 
@@ -309,6 +317,7 @@
                 // 位移矩阵法线
                 var normalMatrix = new THREE.Matrix4();
                 normalMatrix.getInverse(mvMatrix);
+                normalMatrix.transpose();
                 gl.uniformMatrix4fv(nMatrixUniform, false, normalMatrix.toArray());
 
                 // 绘制

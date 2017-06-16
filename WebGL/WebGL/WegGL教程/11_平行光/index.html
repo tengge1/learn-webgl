@@ -293,6 +293,8 @@
 
                 // 平行光
                 var lightMat = new THREE.Vector3(1.0, 1.0, 1.0);
+                lightMat.normalize();
+                lightMat.multiplyScalar(-1);
                 gl.uniform3fv(lightingDirectionUniform, lightMat.toArray()); // 方向
                 gl.uniform3f(directionalColorUniform, 1.0, 1.0, 1.0); // 颜色
 
@@ -309,6 +311,7 @@
                 // 位移矩阵法线
                 var normalMatrix = new THREE.Matrix4();
                 normalMatrix.getInverse(mvMatrix);
+                normalMatrix.transpose();
                 gl.uniformMatrix4fv(nMatrixUniform, false, normalMatrix.toArray());
 
                 // 绘制
