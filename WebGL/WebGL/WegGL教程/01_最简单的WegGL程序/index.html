@@ -8,10 +8,10 @@
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 position;
+        attribute vec3 aVertexPosition;
 
         void main(void) {
-        gl_Position = vec4(position, 1.0);
+        gl_Position = vec4(aVertexPosition, 1.0);
         }
     </script>
 
@@ -32,19 +32,17 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-vs').textContent);
             gl.compileShader(shader);
             var vertexShader = shader;
 
             // 片源着色器
             var shader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-fs').textContent);
             gl.compileShader(shader);
             var fragmentShader = shader;
 
@@ -55,24 +53,36 @@
             gl.linkProgram(shaderProgram);
             gl.useProgram(shaderProgram);
 
-            // 缓存
-            var buffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            // 获取参数地址
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+            gl.enableVertexAttribArray(vertexPositionAttr);
 
-            // 顶点
+            // 顶点位置
             var vertices = [
-                 -0.5, -0.5, 0.0,
-                 0.5, -0.5, 0.0,
-                 0.0, 0.5, 0.0
+                -0.5, -0.5, 0.0,
+                0.5, -0.5, 0.0,
+                0.0, 0.5, 0.0
             ];
+            var vertexPositionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            var position = gl.getAttribLocation(shaderProgram, "position");
-            gl.enableVertexAttribArray(position);
-            gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
-
             // 绘制
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+            var render = function () {
+                // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+                // 顶点位置
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+                gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
+
+                // 绘制
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+
+                requestAnimationFrame(render);
+            }
+            render();
         }
     </script>
 </head>

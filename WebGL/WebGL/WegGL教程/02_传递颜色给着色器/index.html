@@ -8,13 +8,14 @@
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 position; // 位置
-        attribute vec4 color; // 颜色
+        attribute vec3 aVertexPosition;
+        attribute vec4 aVertexColor; // 顶点颜色
+
         varying vec4 vColor;
 
         void main(void) {
-        gl_Position = vec4(position, 1.0);
-        vColor = color;
+        gl_Position = vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
         }
     </script>
 
@@ -36,19 +37,17 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-vs').textContent);
             gl.compileShader(shader);
             var vertexShader = shader;
 
             // 片源着色器
             var shader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-fs').textContent);
             gl.compileShader(shader);
             var fragmentShader = shader;
 
@@ -59,36 +58,52 @@
             gl.linkProgram(shaderProgram);
             gl.useProgram(shaderProgram);
 
-            // 顶点
+            // 获取参数地址
+            var vertexPositionAttr = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+            gl.enableVertexAttribArray(vertexPositionAttr);
+            var vertexColorAttr = gl.getAttribLocation(shaderProgram, 'aVertexColor');
+            gl.enableVertexAttribArray(vertexColorAttr);
+
+            // 顶点位置
             var vertices = [
                  -0.5, -0.5, 0.0,
                  0.5, -0.5, 0.0,
                  0.0, 0.5, 0.0
             ];
-            var buffer1 = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer1);
+            var vertexPositionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            var position = gl.getAttribLocation(shaderProgram, 'position');
-            gl.enableVertexAttribArray(position);
-            gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
-
-            // 颜色
+            // 顶点颜色
             var colors = [
                 1.0, 0.0, 0.0, 1.0,
                 0.0, 1.0, 0.0, 1.0,
                 0.0, 0.0, 1.0, 1.0
             ];
-            var buffer2 = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer2);
+            var vertexColorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
-            var color = gl.getAttribLocation(shaderProgram, 'color');
-            gl.enableVertexAttribArray(color);
-            gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 0, 0);
+            // 渲染循环
+            var render = function () {
+                // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            // 绘制
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+                // 顶点位置
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+                gl.vertexAttribPointer(vertexPositionAttr, 3, gl.FLOAT, false, 0, 0);
+
+                // 顶点颜色
+                gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
+                gl.vertexAttribPointer(vertexColorAttr, 4, gl.FLOAT, false, 0, 0);
+
+                // 绘制
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+
+                requestAnimationFrame(render);
+            }
+            render();
         }
     </script>
 </head>
