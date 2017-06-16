@@ -9,10 +9,12 @@
 
     <!-- 顶点着色器 -->
     <script id="shader-vs" type="x-shader/x-vertex">
-        attribute vec3 aVertexPosition; // 顶点坐标
-        attribute vec4 aVertexColor; // 颜色
+        attribute vec3 aVertexPosition;
+        attribute vec4 aVertexColor;
+
+        uniform mat4 uMVMatrix;
+
         varying vec4 vColor;
-        uniform mat4 uMVMatrix; // 位移矩阵
 
         void main(void) {
         gl_Position = uMVMatrix * vec4(aVertexPosition, 1.0);
@@ -23,6 +25,7 @@
     <!-- 片源着色器 -->
     <script id="shader-fs" type="x-shader/x-fragment">
         precision mediump float;
+
         varying vec4 vColor;
 
         void main(void) {
@@ -38,18 +41,17 @@
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
             gl.viewport(0, 0, gl.viewportWidth, gl.viewportWidth);
-            gl.clearColor(0.0, 0.0, 0.0, 1.0);
             gl.enable(gl.DEPTH_TEST);
 
             // 顶点着色器
             var shader = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-vs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-vs').textContent);
             gl.compileShader(shader);
             var vertexShader = shader;
 
             // 片源着色器
             var shader = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(shader, document.getElementById('shader-fs').innerHTML);
+            gl.shaderSource(shader, document.getElementById('shader-fs').textContent);
             gl.compileShader(shader);
             var fragmentShader = shader;
 
@@ -67,7 +69,7 @@
             gl.enableVertexAttribArray(vertexColorAttr);
             var mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
 
-            // 顶点
+            // 顶点位置
             var vertices = [
                 // 前面
                  -0.5, -0.5, -0.5,
@@ -109,7 +111,7 @@
             gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            // 索引
+            // 顶点索引
             var vertexIndices = [
                 // 前面
                 0, 1, 2,
@@ -139,7 +141,7 @@
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(vertexIndices), gl.STATIC_DRAW);
 
-            // 颜色
+            // 顶点颜色
             var vertexColors = [
                 // 前面
                 1.0, 0.0, 0.0, 1.0,
@@ -185,6 +187,7 @@
             var x = 0, y = 0, z = 0;
             var render = function () {
                 // 清屏
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
                 // 顶点
