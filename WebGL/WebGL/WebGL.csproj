@@ -88,7 +88,17 @@
     <Content Include="threejs例子\20_十二面体\20_十二面体.html" />
     <Content Include="threejs例子\21_几何体线框\21_几何体线框.html" />
     <Content Include="threejs例子\22_二十面体\22_二十面体.html" />
-    <Content Include="threejs例子\23_花瓶\23_花瓶.html" />
+    <Content Include="threejs例子\23_车床\23_车床.html" />
+    <Content Include="threejs例子\24_八面体\24_八面体.html" />
+    <Content Include="threejs例子\25_平板\25_平板.html" />
+    <Content Include="threejs例子\26_多面体\26_多面体.html" />
+    <Content Include="threejs例子\27_戒指\27_戒指.html" />
+    <Content Include="threejs例子\28_形状\28_形状.html" />
+    <Content Include="threejs例子\29_球\29_球.html" />
+    <Content Include="threejs例子\30_四面体\30_四面体.html" />
+    <Content Include="threejs例子\31_文字\31_文字.html" />
+    <Content Include="threejs例子\32_汉字\32_汉字.html" />
+    <Content Include="threejs例子\common\fonts\droid\README.txt" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
     <Content Include="threejs例子\common\texture\cube\nz.png" />
@@ -244,6 +254,21 @@
     <Content Include="WegGL教程\image\crate.gif" />
     <Content Include="WegGL教程\image\nehe.gif" />
     <Content Include="WegGL教程\js\three.js" />
+    <Content Include="threejs例子\common\fonts\droid\droid_sans_bold.typeface.json" />
+    <Content Include="threejs例子\common\fonts\droid\droid_sans_mono_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\droid\droid_sans_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\droid\droid_serif_bold.typeface.json" />
+    <Content Include="threejs例子\common\fonts\droid\droid_serif_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\droid\NOTICE" />
+    <Content Include="threejs例子\common\fonts\gentilis_bold.typeface.json" />
+    <Content Include="threejs例子\common\fonts\gentilis_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\helvetiker_bold.typeface.json" />
+    <Content Include="threejs例子\common\fonts\helvetiker_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\LICENSE" />
+    <Content Include="threejs例子\common\fonts\optimer_bold.typeface.json" />
+    <Content Include="threejs例子\common\fonts\optimer_regular.typeface.json" />
+    <Content Include="threejs例子\common\fonts\README" />
+    <Content Include="threejs例子\common\fonts\ttf\kenpixel.ttf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
