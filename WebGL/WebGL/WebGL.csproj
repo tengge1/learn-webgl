@@ -98,6 +98,10 @@
     <Content Include="threejs例子\30_四面体\30_四面体.html" />
     <Content Include="threejs例子\31_文字\31_文字.html" />
     <Content Include="threejs例子\32_汉字\32_汉字.html" />
+    <Content Include="threejs例子\33_环面\33_环面.html" />
+    <Content Include="threejs例子\34_环面扭结\34_环面扭结.html" />
+    <Content Include="threejs例子\35_管状物\35_管状物.html" />
+    <Content Include="threejs例子\36_线框\36_线框.html" />
     <Content Include="threejs例子\common\fonts\droid\README.txt" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
