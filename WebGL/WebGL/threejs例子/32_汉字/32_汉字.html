@@ -39,20 +39,25 @@
         // 几何体
         var text = '你好，世界！';
         var canvas = document.createElement('canvas');
-        //canvas.width = 100;
-        //canvas.height = 30;
-        //canvas.style.width = '100px';
-        //canvas.style.height = '30px';
+        canvas.width = 100;
+        canvas.height = 20;
+        canvas.style.position = 'absolute';
+        canvas.style.left = 0;
+        canvas.style.top = 0;
+        canvas.style.width = '100px';
+        canvas.style.height = '20px';
+        document.body.appendChild(canvas);
         var ctx = canvas.getContext('2d');
-        ctx.font = '30px';
         var width = ctx.measureText(text).width;
-        //canvas.width = width;
-        //canvas.style.width = width + 'px';
+        canvas.width = width;
+        canvas.style.width = width + 'px';
         ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, width, 20);
+        ctx.fillStyle = 'red';
         ctx.fillText(text, 4, 12);
 
         // 平板
-        var geometry = new THREE.PlaneGeometry(100, 30);
+        var geometry = new THREE.PlaneGeometry(width, 20);
         var texture = new THREE.CanvasTexture(canvas);
         var material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide });
         var mesh = new THREE.Mesh(geometry, material);
