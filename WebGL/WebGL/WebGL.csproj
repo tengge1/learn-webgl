@@ -102,6 +102,13 @@
     <Content Include="threejs例子\34_环面扭结\34_环面扭结.html" />
     <Content Include="threejs例子\35_管状物\35_管状物.html" />
     <Content Include="threejs例子\36_线框\36_线框.html" />
+    <Content Include="threejs例子\37_几何体复制\37_几何体复制.html" />
+    <Content Include="threejs例子\38_环境光\38_环境光.html" />
+    <Content Include="threejs例子\39_平行光\39_平行光.html" />
+    <Content Include="threejs例子\40_半球光\40_半球光.html" />
+    <Content Include="threejs例子\41_点光源\41_点光源.html" />
+    <Content Include="threejs例子\42_矩形区域光源\42_矩形区域光源.html" />
+    <Content Include="threejs例子\43_聚光灯\43_聚光灯.html" />
     <Content Include="threejs例子\common\fonts\droid\README.txt" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
