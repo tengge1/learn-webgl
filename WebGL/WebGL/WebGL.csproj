@@ -88,6 +88,7 @@
     <Content Include="threejs例子\20_十二面体\20_十二面体.html" />
     <Content Include="threejs例子\21_几何体线框\21_几何体线框.html" />
     <Content Include="threejs例子\22_二十面体\22_二十面体.html" />
+    <Content Include="threejs例子\23_花瓶\23_花瓶.html" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
     <Content Include="threejs例子\common\texture\cube\nz.png" />
