@@ -109,6 +109,9 @@
     <Content Include="threejs例子\41_点光源\41_点光源.html" />
     <Content Include="threejs例子\42_矩形区域光源\42_矩形区域光源.html" />
     <Content Include="threejs例子\43_聚光灯\43_聚光灯.html" />
+    <Content Include="threejs例子\44_基本线条材质\44_基本线条材质.html" />
+    <Content Include="threejs例子\45_虚线材质\45_虚线材质.html" />
+    <Content Include="threejs例子\46_基本网格材质\46_基本网格材质.html" />
     <Content Include="threejs例子\common\fonts\droid\README.txt" />
     <Content Include="threejs例子\common\texture\cube\nx.png" />
     <Content Include="threejs例子\common\texture\cube\ny.png" />
