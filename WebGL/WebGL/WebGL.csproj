@@ -503,7 +503,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="threejs-cookbook\01_WebGL渲染器框架\" />
+    <Folder Include="threejs-cookbook\01_WebGL渲染架构\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
