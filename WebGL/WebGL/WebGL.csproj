@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="threejs-cookbook\01_WebGL渲染器骨架\index.html" />
     <Content Include="threejs-cookbook\02_画布渲染器骨架\index.html" />
+    <Content Include="threejs-cookbook\03_css渲染器骨架\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />

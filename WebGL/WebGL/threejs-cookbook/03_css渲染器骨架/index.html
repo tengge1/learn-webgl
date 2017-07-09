@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>03_css渲染器骨架</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+    <script src="../libs/CSS3DRenderer.js"></script>
+</head>
+<body>
+    <script>
+        var string = '<div>' +
+            '<h1>This is an H1 Element.</h1>' +
+            '<span class="large">Hello Three.js cookbook</span>' +
+            '<textarea> And this is a textarea</textarea>' +
+            '</div>';
+
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.CSS3DRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(200, 200, 200);
+        camera.lookAt(scene.position);
+
+        var div = document.createElement('div');
+        div.innerHTML = string;
+        div.style.width = '370px';
+        div.style.height = '370px';
+        div.style.opacity = 0.7;
+        div.style.color = new THREE.Color(Math.random() * 0xffffff).getStyle();
+        var obj = new THREE.CSS3DObject(div);
+        scene.add(obj);
+
+        var render = function () {
+            requestAnimationFrame(render);
+            obj.rotation.x += 0.01;
+            obj.rotation.y += 0.01;
+            obj.rotation.z += 0.01;
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
+</body>
+</html>
