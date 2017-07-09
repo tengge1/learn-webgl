@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="threejs-cookbook\01_WebGL渲染器骨架\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />
@@ -149,6 +150,7 @@
     <Content Include="threejs-cookbook\assets\textures\webtreats_metal_7-1024px.jpg" />
     <Content Include="threejs-cookbook\assets\textures\wood_1-1024x1024.png" />
     <Content Include="threejs-cookbook\assets\video\sintel_trailer-480p.mp4" />
+    <Content Include="threejs-cookbook\css\index.css" />
     <Content Include="threejs-cookbook\libs\ammo.js" />
     <Content Include="threejs-cookbook\libs\CanvasRenderer.js" />
     <Content Include="threejs-cookbook\libs\CCapture.min.js" />
@@ -503,7 +505,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="threejs-cookbook\01_WebGL渲染架构\" />
+    <Folder Include="threejs-cookbook\02_画布渲染器骨架\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
