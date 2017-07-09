@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="threejs-cookbook\01_WebGL渲染器骨架\index.html" />
+    <Content Include="threejs-cookbook\02_画布渲染器骨架\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />
@@ -504,9 +505,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="threejs-cookbook\02_画布渲染器骨架\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
