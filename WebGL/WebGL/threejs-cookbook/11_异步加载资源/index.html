@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>11_异步加载资源</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+</head>
+<body>
+    <script>
+        var resource = "../assets/sounds/wagner-short.ogg";
+        var texture = "../assets/textures/debug.png";
+        var texture404 = "../assets/textures/debug.jpg";
+        var model = "../assets/models/monkey-anim.js";
+
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(20, 20, 20);
+        camera.lookAt(scene.position);
+
+        // 加载完成回调函数
+        var onLoadCallback = function (loaded) {
+            //console.log(loaded);
+        }
+
+        // 加载进度回调函数
+        var onProgressCallback = function (progress) {
+            //console.log(progress);
+        }
+
+        // 加载错误回调函数
+        var onErrorCallback = function (error) {
+            //console.log(error);
+        }
+
+        // 加载ogg资源
+        var xhrLoader = new THREE.XHRLoader();
+        xhrLoader.load(resource, onLoadCallback, onProgressCallback, onErrorCallback);
+
+        // 加载材质
+        var text = THREE.ImageUtils.loadTexture(texture, null, onLoadCallback, onErrorCallback);
+        console.log(text);
+
+        // 加载不存在材质
+        var text = THREE.ImageUtils.loadTexture(texture404, null, onLoadCallback, onErrorCallback);
+        console.log(text);
+
+        // 加载模型
+        var jsonLoader = new THREE.JSONLoader();
+        jsonLoader.load(model, onLoadCallback, null);
+
+        // 加载模型带进度
+        var jsonLoader = new THREE.JSONLoader();
+        jsonLoader.loadAjaxJSON(jsonLoader, model, onLoadCallback, null, onProgressCallback);
+
+        var render = function () {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+        render();
+    </script>
+</body>
+</html>
