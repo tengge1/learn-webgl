@@ -76,6 +76,7 @@
     <Content Include="threejs-cookbook\08_使用纹理\index.html" />
     <Content Include="threejs-cookbook\10_键盘控制\index.html" />
     <Content Include="threejs-cookbook\11_异步加载资源\index.html" />
+    <Content Include="threejs-cookbook\12_等待资源\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>12_等待资源</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+</head>
+<body>
+    <script>
+        var resource = "../assets/sounds/wagner-short.ogg";
+        var texture = "../assets/textures/debug.png";
+        var texture404 = "../assets/textures/debug.jpg";
+        var model = "../assets/models/monkey-anim.js";
+
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(20, 20, 20);
+        camera.lookAt(scene.position);
+
+        // 加载ogg资源
+        var promise1 = new Promise(function(resolve, reject) {
+            var xhrLoader = new THREE.XHRLoader();
+            xhrLoader.load(resource, function (loaded) {
+                console.log('promise1 load success');
+                resolve();
+            }, function (progress) {
+
+            }, function (error) {
+                console.log('promise1 load error');
+                reject();
+            });
+        });
+
+        // 加载材质
+        var promise2 = new Promise(function (resolve, reject) {
+            var text = THREE.ImageUtils.loadTexture(texture, null, function (loaded) {
+                console.log('promise2 load success');
+                resolve();
+            }, function (error) {
+                console.log('promise2 load error');
+                reject();
+            });
+        });
+        
+        // 加载不存在材质
+        var promise3 = new Promise(function (resolve, reject) {
+            THREE.ImageUtils.loadTexture(texture404, null, function (loaded) {
+                console.log('promise3 load success');
+                resolve();
+            }, function (error) {
+                console.log('promise3 load error');
+                reject();
+            });
+        });
+        
+        // 加载模型
+        var promise4 = new Promise(function (resolve, reject) {
+            var jsonLoader = new THREE.JSONLoader();
+            jsonLoader.load(model, function (loaded) {
+                console.log('promise4 load success');
+                resolve();
+            }, function (progress) {
+
+            }, function (error) {
+                console.log('promise4 load error');
+                reject();
+            });
+        });
+
+        var render = function () {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function () {
+            Promise.all([promise1, promise2, promise3, promise4])
+            .then(function () {
+                console.log('all load success');
+                render();
+            })
+            .catch(function () {
+                console.log('some error occurs');
+            });
+        }
+    </script>
+</body>
+</html>
