@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>07_控制变量</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+    <script src="../libs/dat.gui.min.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(20, 20, 20);
+        camera.lookAt(scene.position);
+
+        var geometry = new THREE.BoxGeometry(10 * Math.random(), 10 * Math.random(), 10 * Math.random());
+        var material = new THREE.MeshNormalMaterial();
+        var box = new THREE.Mesh(geometry, material);
+        box.name = 'Box';
+        scene.add(box);
+
+        // 控制变量
+        var control = new function () {
+            this.rotationSpeed = 0.005;
+            this.scale = 1.0;
+        };
+        var gui = new dat.GUI();
+        gui.add(control, 'rotationSpeed', -0.1, 0.1);
+        gui.add(control, 'scale', 0.02, 2.0);
+
+        var render = function () {
+            requestAnimationFrame(render);
+            box.rotation.x += control.rotationSpeed;
+            box.rotation.y += control.rotationSpeed;
+            box.rotation.z += control.rotationSpeed;
+            box.scale.x = control.scale;
+            box.scale.y = control.scale;
+            box.scale.z = control.scale;
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
+</body>
+</html>

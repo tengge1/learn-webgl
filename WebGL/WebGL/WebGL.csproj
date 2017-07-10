@@ -72,6 +72,7 @@
     <Content Include="threejs-cookbook\04_测试是否支持webgl\index.html" />
     <Content Include="threejs-cookbook\05_配置动画循环\index.html" />
     <Content Include="threejs-cookbook\06_检测帧率\index.html" />
+    <Content Include="threejs-cookbook\07_控制变量\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />
