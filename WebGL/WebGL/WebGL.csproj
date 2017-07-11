@@ -518,6 +518,7 @@
   <ItemGroup>
     <Folder Include="threejs-cookbook\09_解决跨域问题\" />
     <Folder Include="threejs-cookbook\13_调试ThreeJs\" />
+    <Folder Include="threejs-cookbook\15_绕轴旋转\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
