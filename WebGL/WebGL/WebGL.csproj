@@ -78,6 +78,7 @@
     <Content Include="threejs-cookbook\11_异步加载资源\index.html" />
     <Content Include="threejs-cookbook\12_等待资源\index.html" />
     <Content Include="threejs-cookbook\14_拖动文件到场景中\index.html" />
+    <Content Include="threejs-cookbook\15_绕轴旋转\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />
@@ -518,7 +519,6 @@
   <ItemGroup>
     <Folder Include="threejs-cookbook\09_解决跨域问题\" />
     <Folder Include="threejs-cookbook\13_调试ThreeJs\" />
-    <Folder Include="threejs-cookbook\15_绕轴旋转\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
