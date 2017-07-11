@@ -3,9 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <title>14_拖动文件到场景中</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <style>
+        #holder {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            width: 150px;
+            height: 150px;
+            border: 10px solid #666;
+        }
+
+            #holder:hover {
+                border: 10px solid #ccc;
+            }
+    </style>
     <script src="../libs/three.js"></script>
 </head>
 <body>
+    <div id="holder"></div>
     <script>
         var scene = new THREE.Scene();
 
@@ -31,6 +48,36 @@
             box.rotation.z += 0.01;
             renderer.render(scene, camera);
         }
+
+        // 拖动文件
+        var holder = document.getElementById('holder');
+        holder.ondragover = function () {
+            this.className = 'hover';
+            return false;
+        }
+        holder.ondragend = function () {
+            this.className = '';
+            return false;
+        }
+        holder.ondrop = function (e) {
+            this.className = '';
+            e.preventDefault();
+            var file = e.dataTransfer.files[0];
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                console.log(event.target);
+                console.log(event);
+                holder.style.background = 'url(' + event.target.result + ') no-repeat center';
+
+                var image = document.createElement('img');
+                image.src = event.target.result;
+                var texture = new THREE.Texture(image);
+                texture.needsUpdate = true;
+                box.material.map = texture;
+            };
+            reader.readAsDataURL(file);
+        }
+
         render();
     </script>
 </body>
