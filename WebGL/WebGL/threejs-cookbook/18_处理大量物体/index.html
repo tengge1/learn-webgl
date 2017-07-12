@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>18_处理大量物体</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+    <script src="../libs/dat.gui.min.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(40, 40, 40);
+        camera.lookAt(scene.position);
+
+        var geometry = new THREE.BoxGeometry(20, 20, 20);
+        var material = new THREE.MeshLambertMaterial();
+        material.transparent = true;
+        material.vertexColors = THREE.FaceColors;
+        var box = new THREE.Mesh(geometry, material);
+        scene.add(box);
+
+        geometry.faces.forEach((face) => {
+            face.color = new THREE.Color(0xff0000);
+        });
+
+        var light = new THREE.DirectionalLight(0xffffff);
+        scene.add(light);
+        light.position.set(50, 50, 50);
+        light.lookAt(scene.position);
+
+        var render = function () {
+            requestAnimationFrame(render);
+            box.rotation.x += 0.01;
+            box.rotation.y += 0.01;
+            box.rotation.z += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        var control = new function () {
+            this.changeColor = function () {
+                box.geometry.faces.forEach((face) => {
+                    face.color = new THREE.Color(Math.random() * 0xffffff);
+                });
+                box.geometry.colorsNeedUpdate = true;
+            };
+            this.changeVertices = function () {
+                box.geometry.vertices.forEach((vertice) => {
+                    vertice.x += Math.random() * 2 - 1;
+                    vertice.y += Math.random() * 2 - 1;
+                    vertice.z += Math.random() * 2 - 1;
+                });
+                box.geometry.verticesNeedUpdate = true;
+            }
+        };
+        var gui = new dat.GUI();
+        gui.add(control, 'changeColor');
+        gui.add(control, 'changeVertices');
+
+        render();
+    </script>
+</body>
+</html>

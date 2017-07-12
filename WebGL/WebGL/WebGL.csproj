@@ -81,6 +81,7 @@
     <Content Include="threejs-cookbook\15_绕轴旋转\index.html" />
     <Content Include="threejs-cookbook\16_绕点旋转\index.html" />
     <Content Include="threejs-cookbook\17_更新物体\index.html" />
+    <Content Include="threejs-cookbook\18_处理大量物体\index.html" />
     <Content Include="threejs-cookbook\assets\cubemap\2294472375_24a3b8ef46_o.jpg" />
     <Content Include="threejs-cookbook\assets\cubemap\car\back.png" />
     <Content Include="threejs-cookbook\assets\cubemap\car\bottom.png" />
