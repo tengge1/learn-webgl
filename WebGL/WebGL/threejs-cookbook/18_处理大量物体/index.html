@@ -5,6 +5,7 @@
     <title>18_处理大量物体</title>
     <link href="../css/index.css" rel="stylesheet" />
     <script src="../libs/three.js"></script>
+    <script src="../libs/stats.min.js"></script>
     <script src="../libs/dat.gui.min.js"></script>
 </head>
 <body>
@@ -20,49 +21,50 @@
         camera.position.set(40, 40, 40);
         camera.lookAt(scene.position);
 
-        var geometry = new THREE.BoxGeometry(20, 20, 20);
-        var material = new THREE.MeshLambertMaterial();
-        material.transparent = true;
-        material.vertexColors = THREE.FaceColors;
-        var box = new THREE.Mesh(geometry, material);
-        scene.add(box);
+        // stats
+        var stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = 0;
+        stats.domElement.style.top = 0;
+        document.body.appendChild(stats.domElement);
 
-        geometry.faces.forEach((face) => {
-            face.color = new THREE.Color(0xff0000);
-        });
-
+        // light
         var light = new THREE.DirectionalLight(0xffffff);
         scene.add(light);
         light.position.set(50, 50, 50);
         light.lookAt(scene.position);
 
+        var pivot = new THREE.Object3D();
+        scene.add(pivot);
+
         var render = function () {
             requestAnimationFrame(render);
-            box.rotation.x += 0.01;
-            box.rotation.y += 0.01;
-            box.rotation.z += 0.01;
+            pivot.rotation.y += 0.01;
             renderer.render(scene, camera);
+            stats.update();
         }
 
         var control = new function () {
-            this.changeColor = function () {
-                box.geometry.faces.forEach((face) => {
-                    face.color = new THREE.Color(Math.random() * 0xffffff);
-                });
-                box.geometry.colorsNeedUpdate = true;
+            this.addObjects = function () {
+                for (var i = 0; i < 100; i++) {
+                    var geometry = new THREE.BoxGeometry(10 * Math.random(), 10 * Math.random(), 10 * Math.random());
+                    var material = new THREE.MeshPhongMaterial({
+                        color: 0xffffff * Math.random(),
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    var mesh = new THREE.Mesh(geometry, material);
+                    pivot.add(mesh);
+                    mesh.position.set(100 * Math.random() - 50, 0, 100 * Math.random() - 50);
+                }
             };
-            this.changeVertices = function () {
-                box.geometry.vertices.forEach((vertice) => {
-                    vertice.x += Math.random() * 2 - 1;
-                    vertice.y += Math.random() * 2 - 1;
-                    vertice.z += Math.random() * 2 - 1;
-                });
-                box.geometry.verticesNeedUpdate = true;
+            this.addMergedObjects = function () {
+
             }
         };
         var gui = new dat.GUI();
-        gui.add(control, 'changeColor');
-        gui.add(control, 'changeVertices');
+        gui.add(control, 'addObjects');
+        gui.add(control, 'addMergedObjects');
 
         render();
     </script>
