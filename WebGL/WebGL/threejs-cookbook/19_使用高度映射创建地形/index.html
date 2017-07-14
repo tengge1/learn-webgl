@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>19_使用高度映射创建地形</title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../libs/three.js"></script>
+    <script src="../libs/OrbitControls.js"></script>
+    <script src="../libs/chroma.min.js"></script>
+</head>
+<body>
+    <script>
+        var scale = chroma.scale(['blue', 'green', 'red']).domain([0, 50]);
+        function getHighPoint(geometry, face) {
+
+            var v1 = geometry.vertices[face.a].y;
+            var v2 = geometry.vertices[face.b].y;
+            var v3 = geometry.vertices[face.c].y;
+
+            return Math.max(v1, v2, v3);
+        };
+
+        var scene = new THREE.Scene();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(0x000000, 1.0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(1200, 500, 1200);
+        camera.lookAt(scene.position);
+
+        var light = new THREE.DirectionalLight(0xffffff);
+        scene.add(light);
+        light.position.set(1200, 1200, 1200);
+
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI * 0.5;
+
+        // 创建地形
+        var depth = 512;
+        var width = 512;
+
+        var spacingX = 3;
+        var spacingZ = 3;
+        var heightOffset = 2;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 512;
+        var ctx = canvas.getContext('2d');
+
+        var img = new Image();
+        img.src = "../assets/other/grandcanyon.png";
+        img.onload = function () {
+            // draw on canvas
+            ctx.drawImage(img, 0, 0);
+            var pixel = ctx.getImageData(0, 0, width, depth);
+
+            var geom = new THREE.Geometry;
+            var output = [];
+            for (var x = 0; x < depth; x++) {
+                for (var z = 0; z < width; z++) {
+                    // get pixel
+                    // since we're grayscale, we only need one element
+
+                    var yValue = pixel.data[z * 4 + (depth * x * 4)] / heightOffset;
+                    var vertex = new THREE.Vector3(x * spacingX, yValue, z * spacingZ);
+                    geom.vertices.push(vertex);
+                }
+            }
+
+            // we create a rectangle between four vertices, and we do
+            // that as two triangles.
+            for (var z = 0; z < depth - 1; z++) {
+                for (var x = 0; x < width - 1; x++) {
+                    // we need to point to the position in the array
+                    // a - - b
+                    // |  x  |
+                    // c - - d
+                    var a = x + z * width;
+                    var b = (x + 1) + (z * width);
+                    var c = x + ((z + 1) * width);
+                    var d = (x + 1) + ((z + 1) * width);
+
+                    var face1 = new THREE.Face3(a, b, d);
+                    var face2 = new THREE.Face3(d, c, a);
+
+                    face1.color = new THREE.Color(scale(getHighPoint(geom, face1)).hex());
+                    face2.color = new THREE.Color(scale(getHighPoint(geom, face2)).hex())
+
+                    geom.faces.push(face1);
+                    geom.faces.push(face2);
+                }
+            }
+
+            geom.computeVertexNormals(true);
+            geom.computeFaceNormals();
+            geom.computeBoundingBox();
+
+            var zMax = geom.boundingBox.max.z;
+            var xMax = geom.boundingBox.max.x;
+
+            var mesh = new THREE.Mesh(geom, new THREE.MeshLambertMaterial({
+                vertexColors: THREE.FaceColors,
+                color: 0x666666
+            }));
+            mesh.translateX(-xMax / 2);
+            mesh.translateZ(-zMax / 2);
+            scene.add(mesh);
+            mesh.name = 'valley';
+        };
+
+        var render = function () {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
+</body>
+</html>
