@@ -58,13 +58,29 @@
                     mesh.position.set(100 * Math.random() - 50, 0, 100 * Math.random() - 50);
                 }
             };
-            this.addMergedObjects = function () {
+            this.addMerged = function () {
+                for (var i = 0; i < 100; i++) {
+                    var geometry = new THREE.Geometry();
 
+                    var merged = new THREE.BoxGeometry(10 * Math.random(), 10 * Math.random(), 10 * Math.random());
+                    var translation = new THREE.Matrix4().makeTranslation(100 * Math.random() - 50, 100 * Math.random() - 50);
+                    merged.applyMatrix(translation);
+                    geometry.merge(merged);
+
+                    var material = new THREE.MeshPhongMaterial({
+                        color: 0xffffff * Math.random(),
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    var mesh = new THREE.Mesh(geometry, material);
+                    pivot.add(mesh);
+                    mesh.position.set(100 * Math.random() - 50, 0, 100 * Math.random() - 50);
+                }
             }
         };
         var gui = new dat.GUI();
         gui.add(control, 'addObjects');
-        gui.add(control, 'addMergedObjects');
+        gui.add(control, 'addMerged');
 
         render();
     </script>
