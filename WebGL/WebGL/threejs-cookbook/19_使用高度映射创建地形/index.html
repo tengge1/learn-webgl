@@ -6,20 +6,9 @@
     <link href="../css/index.css" rel="stylesheet" />
     <script src="../libs/three.js"></script>
     <script src="../libs/OrbitControls.js"></script>
-    <script src="../libs/chroma.min.js"></script>
 </head>
 <body>
     <script>
-        var scale = chroma.scale(['blue', 'green', 'red']).domain([0, 50]);
-        function getHighPoint(geometry, face) {
-
-            var v1 = geometry.vertices[face.a].y;
-            var v2 = geometry.vertices[face.b].y;
-            var v3 = geometry.vertices[face.c].y;
-
-            return Math.max(v1, v2, v3);
-        };
-
         var scene = new THREE.Scene();
 
         var renderer = new THREE.WebGLRenderer();
@@ -46,19 +35,22 @@
         var spacingZ = 3;
         var heightOffset = 2;
 
+        // canvas
         var canvas = document.createElement('canvas');
         canvas.width = 512;
         canvas.height = 512;
         var ctx = canvas.getContext('2d');
 
+        // img
         var img = new Image();
         img.src = "../assets/other/grandcanyon.png";
         img.onload = function () {
             // draw on canvas
+            debugger;
             ctx.drawImage(img, 0, 0);
             var pixel = ctx.getImageData(0, 0, width, depth);
 
-            var geom = new THREE.Geometry;
+            var geom = new THREE.Geometry();
             var output = [];
             for (var x = 0; x < depth; x++) {
                 for (var z = 0; z < width; z++) {
@@ -86,9 +78,6 @@
 
                     var face1 = new THREE.Face3(a, b, d);
                     var face2 = new THREE.Face3(d, c, a);
-
-                    face1.color = new THREE.Color(scale(getHighPoint(geom, face1)).hex());
-                    face2.color = new THREE.Color(scale(getHighPoint(geom, face2)).hex())
 
                     geom.faces.push(face1);
                     geom.faces.push(face2);
